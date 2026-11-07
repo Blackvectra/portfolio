@@ -11,7 +11,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "astro": "astro"
+    "astro": "astro",
+    "check:inline": "node scripts/check-inline.mjs dist",
+    "check:placeholders": "node scripts/check-placeholders.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.4",
