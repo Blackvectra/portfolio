@@ -1,0 +1,22 @@
+---
+import StatusBadge from './StatusBadge.astro';
+import type { Project } from '../data/projects';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+// The card shows the summary up to any placeholder; the full paragraph,
+// placeholders included, is on /projects/.
+const placeholderAt = project.summary.indexOf('[');
+const lead = (placeholderAt > 0 ? project.summary.slice(0, placeholderAt) : project.summary).trim();
+---
+<article class="card">
+  <StatusBadge status={project.status} />
+  <h3>{project.title}</h3>
+  <p>{lead}</p>
+  <a class="card__link" href={`/projects/#${project.id}`}>
+    Project details<span class="visually-hidden">: {project.title}</span>
+  </a>
+</article>

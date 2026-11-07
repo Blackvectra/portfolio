@@ -1,0 +1,13 @@
+---
+// Renders text and styles any bracketed placeholder inside it so unfilled
+// content is visible on the page.
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+const parts = text.split(/(\[[^\]]+\])/g).filter(Boolean);
+---
+<p>
+  {parts.map((part) => (/^\[.+\]$/.test(part) ? <span class="placeholder">{part}</span> : part))}
+</p>

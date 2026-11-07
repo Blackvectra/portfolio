@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WorkWithMe from '../../components/WorkWithMe.astro';
+import { formatDate, getPublishedWriting } from '../../lib/writing';
+
+const posts = await getPublishedWriting();
+---
+<BaseLayout
+  title="Writing"
+  description="Technical write-ups and case studies by Matthew Levorson on Microsoft 365, Entra, and email security."
+>
+  <div class="container">
+    <section class="section">
+      <h1>Writing</h1>
+      <p class="lede">
+        Case studies and technical notes. Each one separates what was configured, what was actually
+        enforced, and what the evidence showed.
+      </p>
+      {
+        posts.length === 0 ? (
+          <p class="empty-state">Nothing published yet. Write-ups will appear here as they are finished.</p>
+        ) : (
+          <ul class="post-list">
+            {posts.map((post) => (
+              <li>
+                <article>
+                  <time datetime={post.data.date.toISOString().slice(0, 10)}>{formatDate(post.data.date)}</time>
+                  <h2>
+                    <a href={`/writing/${post.id}/`}>{post.data.title}</a>
+                  </h2>
+                  <p class="muted">{post.data.summary}</p>
+                </article>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </section>
+    <WorkWithMe />
+  </div>
+</BaseLayout>

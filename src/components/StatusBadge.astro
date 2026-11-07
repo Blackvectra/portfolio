@@ -1,0 +1,16 @@
+---
+import type { ProjectStatus } from '../data/projects';
+
+interface Props {
+  status: ProjectStatus;
+}
+
+const labels: Record<ProjectStatus, string> = {
+  planned: 'Planned',
+  'in-progress': 'In progress',
+  published: 'Published',
+};
+
+const { status } = Astro.props;
+---
+<span class={`status status--${status}`}><span class="visually-hidden">Status: </span>{labels[status]}</span>

@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import WorkWithMe from '../components/WorkWithMe.astro';
+import { projects } from '../data/projects';
+import { site } from '../data/site';
+---
+<BaseLayout>
+  <div class="container">
+    <section class="section" aria-labelledby="intro">
+      <h1 id="intro">{site.name}</h1>
+      <p class="lede">
+        Security engineer focused on Microsoft 365 and Entra security assessments, enterprise email
+        security, and DMARC enforcement.
+      </p>
+      <p class="prose muted">
+        This site holds my projects and technical write-ups. Consulting work runs through {site.business}.
+      </p>
+    </section>
+
+    <section aria-labelledby="projects-heading">
+      <h2 id="projects-heading">Projects</h2>
+      <ul class="card-grid">
+        {
+          projects.map((project) => (
+            <li>
+              <ProjectCard project={project} />
+            </li>
+          ))
+        }
+      </ul>
+      <p class="section--tight"><a href="/projects/">All projects</a> &middot; <a href="/writing/">Writing</a></p>
+    </section>
+
+    <WorkWithMe />
+  </div>
+</BaseLayout>
