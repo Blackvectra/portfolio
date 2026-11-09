@@ -1,60 +1,74 @@
 /*
-  Design tokens. One blue accent, no cyan, no green.
-  Light is the default. Dark applies when the OS prefers dark and no explicit
-  choice is stored, or when the user picks dark (data-theme="dark").
-  Contrast ratios (text on background) were checked against WCAG AA 4.5:1.
+  Editorial + mono.
+
+  Design tokens. Serif for reading (Newsreader, with its optical-size axis),
+  monospace for labels, dates, tags, navigation and code (IBM Plex Mono). One
+  accent, oxblood in light and brick in dark. No cards, no fills: hairline
+  rules separate things. Light is the default; dark applies when the OS
+  prefers dark and no explicit choice is stored, or when the user picks dark
+  (data-theme="dark").
+
+  Contrast (WCAG AA, text 4.5:1, control borders 3:1) was checked for every
+  text/background pair below in both themes; --border is decorative and is
+  not held to 3:1, --border-strong is used wherever a border is the edge of
+  a control.
 */
 :root {
-  --bg: #ffffff;
-  --bg-subtle: #f5f7fa;
-  --surface: #ffffff;
-  --text: #111827;       /* 17.7:1 on --bg */
-  --text-muted: #4b5563; /* 7.6:1 on --bg, 7.1:1 on --bg-subtle */
-  --border: #d1d5db;
-  --accent: #1d4ed8;     /* 6.7:1 on --bg, used for links and buttons */
-  --accent-hover: #1e40af;
-  --accent-contrast: #ffffff; /* text on accent buttons, 6.7:1 */
-  --accent-soft: #eff4ff;
-  --focus: #1d4ed8;
+  --bg: #f7f3ea;
+  --bg-subtle: #efe9dc;
+  --surface: #f7f3ea;
+  --text: #1f1b16;          /* 15.5:1 on --bg */
+  --text-muted: #5e564b;    /* 6.5:1 on --bg, 6.0:1 on --bg-subtle */
+  --border: #d6cdbc;        /* hairline rules */
+  --border-strong: #857c6f; /* control edges, >= 3:1 on --bg */
+  --accent: #8b2e1f;        /* 7.6:1 on --bg: links, status, emphasis */
+  --accent-hover: #6e2317;
+  --accent-contrast: #f7f3ea; /* text on a filled accent, 7.6:1 */
+  --accent-soft: #f0e3dd;
+  --focus: #8b2e1f;
   --placeholder-bg: #fff7d6;
-  --placeholder-text: #6b4e00; /* 6.9:1 on --placeholder-bg */
-  --radius: 10px;
-  --max: 68rem;
-  --measure: 42rem;
+  --placeholder-text: #6b4e00;
+  --radius: 0px;
+  --max: 62rem;
+  --measure: 36rem;
+  --font-serif: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --bg: #0f172a;
-    --bg-subtle: #162033;
-    --surface: #162033;
-    --text: #f1f5f9;       /* 16.0:1 on --bg */
-    --text-muted: #b6c2d2; /* 9.6:1 on --bg, 8.5:1 on --surface */
-    --border: #334155;
-    --accent: #8ab4ff;     /* 8.5:1 on --bg */
-    --accent-hover: #b3ceff;
-    --accent-contrast: #0f172a; /* 8.5:1 on --accent */
-    --accent-soft: #1b2a4a;
-    --focus: #8ab4ff;
+    --bg: #1a1816;
+    --bg-subtle: #221f1b;
+    --surface: #1a1816;
+    --text: #ece6da;          /* 14.3:1 on --bg */
+    --text-muted: #b3a999;    /* 7.6:1 on --bg */
+    --border: #3a352e;
+    --border-strong: #8c8273;
+    --accent: #e8927a;        /* 7.4:1 on --bg */
+    --accent-hover: #f2b3a1;
+    --accent-contrast: #1a1816;
+    --accent-soft: #2c2420;
+    --focus: #e8927a;
     --placeholder-bg: #3a2f0b;
-    --placeholder-text: #ffe08a; /* 10.4:1 on --placeholder-bg */
+    --placeholder-text: #ffe08a;
     color-scheme: dark;
   }
 }
 
 :root[data-theme='dark'] {
-  --bg: #0f172a;
-  --bg-subtle: #162033;
-  --surface: #162033;
-  --text: #f1f5f9;
-  --text-muted: #b6c2d2;
-  --border: #334155;
-  --accent: #8ab4ff;
-  --accent-hover: #b3ceff;
-  --accent-contrast: #0f172a;
-  --accent-soft: #1b2a4a;
-  --focus: #8ab4ff;
+  --bg: #1a1816;
+  --bg-subtle: #221f1b;
+  --surface: #1a1816;
+  --text: #ece6da;
+  --text-muted: #b3a999;
+  --border: #3a352e;
+  --border-strong: #8c8273;
+  --accent: #e8927a;
+  --accent-hover: #f2b3a1;
+  --accent-contrast: #1a1816;
+  --accent-soft: #2c2420;
+  --focus: #e8927a;
   --placeholder-bg: #3a2f0b;
   --placeholder-text: #ffe08a;
   color-scheme: dark;
@@ -73,9 +87,10 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Figtree Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  font-size: 1.0625rem;
-  line-height: 1.6;
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
+  font-size: 1.125rem;
+  line-height: 1.65;
   color: var(--text);
   background: var(--bg);
   min-height: 100vh;
@@ -87,46 +102,51 @@ main {
   flex: 1;
 }
 
+/* Headings: serif, medium weight, tight leading. Size carries hierarchy;
+   weight does not shout. */
 h1,
 h2,
 h3 {
-  line-height: 1.2;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
 }
 
 h1 {
-  font-size: clamp(2rem, 1.5rem + 2vw, 2.75rem);
-  margin: 0 0 1rem;
+  font-size: clamp(2.4rem, 1.8rem + 2.4vw, 3.5rem);
+  margin: 0 0 1.25rem;
 }
 
 h2 {
-  font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.75rem);
-  margin: 2.5rem 0 0.75rem;
+  font-size: clamp(1.6rem, 1.35rem + 0.9vw, 2.1rem);
+  margin: 3rem 0 1rem;
 }
 
 h3 {
-  font-size: 1.2rem;
+  font-size: 1.35rem;
   margin: 0 0 0.5rem;
 }
 
 p {
-  margin: 0 0 1rem;
+  margin: 0 0 1.1rem;
 }
 
 a {
   color: var(--accent);
-  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
 }
 
 a:hover {
   color: var(--accent-hover);
+  text-decoration-thickness: 2px;
 }
 
 :focus-visible {
-  outline: 3px solid var(--focus);
+  outline: 2px solid var(--focus);
   outline-offset: 3px;
-  border-radius: 4px;
 }
 
 img,
@@ -134,18 +154,34 @@ svg {
   max-width: 100%;
 }
 
+/* Monospace: labels, dates, tags, navigation. Small, with tracking. */
+.mono,
+time,
+.site-nav a,
+.tags,
+.status,
+.button,
+.site-footer,
+.article-header p:first-child,
+.post-list time {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+
 pre {
   overflow-x: auto;
-  padding: 1rem;
+  padding: 1rem 1.1rem;
   background: var(--bg-subtle);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  font-size: 0.9rem;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+  line-height: 1.55;
 }
 
 code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 0.92em;
+  font-family: var(--font-mono);
+  font-size: 0.86em;
 }
 
 .visually-hidden {
@@ -169,8 +205,8 @@ code {
   padding: 0.6rem 1rem;
   background: var(--accent);
   color: var(--accent-contrast);
-  border-radius: var(--radius);
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
   text-decoration: none;
 }
 
@@ -191,9 +227,11 @@ code {
 }
 
 .lede {
-  font-size: 1.2rem;
+  font-size: 1.35rem;
+  line-height: 1.45;
   color: var(--text-muted);
   max-width: var(--measure);
+  text-wrap: pretty;
 }
 
 .muted {
@@ -201,7 +239,7 @@ code {
 }
 
 .section {
-  padding: 3rem 0;
+  padding: 3.5rem 0 2rem;
 }
 
 .section--intro {
@@ -209,10 +247,10 @@ code {
 }
 
 .section--tight {
-  padding: 2rem 0;
+  padding: 1.5rem 0;
 }
 
-/* Header */
+/* Header: name in italic serif, navigation in mono, one hairline below. */
 .site-header {
   border-bottom: 1px solid var(--border);
   background: var(--bg);
@@ -221,15 +259,18 @@ code {
 .site-header__inner {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem 1.5rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  align-items: baseline;
+  gap: 0.75rem 1.75rem;
+  padding-top: 1.1rem;
+  padding-bottom: 1.1rem;
 }
 
 .brand {
-  font-weight: 700;
-  font-size: 1.1rem;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.3rem;
+  letter-spacing: -0.01em;
   color: var(--text);
   text-decoration: none;
   margin-right: auto;
@@ -242,7 +283,7 @@ code {
 .site-nav ul {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem 1.25rem;
+  gap: 0.25rem 1.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -251,15 +292,15 @@ code {
 .site-nav a {
   color: var(--text);
   text-decoration: none;
-  font-weight: 500;
+  text-transform: uppercase;
   padding: 0.25rem 0;
+  border-bottom: 1px solid transparent;
 }
 
 .site-nav a:hover,
 .site-nav a[aria-current='page'] {
   color: var(--accent);
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
+  border-bottom-color: currentColor;
 }
 
 .header-actions {
@@ -268,52 +309,51 @@ code {
   gap: 0.75rem;
 }
 
-/* Buttons */
+/* Buttons: outlined mono labels. The primary inverts on hover. */
 .button {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.6rem 1.1rem;
-  border-radius: var(--radius);
-  border: 2px solid var(--accent);
-  background: var(--accent);
-  color: var(--accent-contrast);
-  font-weight: 600;
+  padding: 0.55rem 0.95rem;
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text);
+  text-transform: uppercase;
   text-decoration: none;
   line-height: 1.2;
 }
 
 .button:hover {
-  background: var(--accent-hover);
-  border-color: var(--accent-hover);
-  color: var(--accent-contrast);
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
 }
 
 .button--secondary {
-  background: transparent;
-  color: var(--accent);
+  border-color: var(--border);
+  color: var(--text-muted);
 }
 
 .button--secondary:hover {
-  background: var(--accent-soft);
-  color: var(--accent);
+  background: transparent;
+  border-color: var(--text);
+  color: var(--text);
 }
 
 .button--small {
-  padding: 0.4rem 0.8rem;
-  font-size: 0.95rem;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.72rem;
 }
 
 .theme-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.25rem;
+  height: 2.25rem;
   padding: 0;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  background: transparent;
   color: var(--text);
   cursor: pointer;
 }
@@ -323,13 +363,13 @@ code {
 }
 
 .theme-toggle:hover {
-  border-color: var(--accent);
+  border-color: var(--text);
   color: var(--accent);
 }
 
 .theme-toggle svg {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.1rem;
+  height: 1.1rem;
 }
 
 /* Show the moon in light mode and the sun in dark mode. */
@@ -354,89 +394,114 @@ code {
   }
 }
 
-/* Cards */
+/* Project list on the home page: a ruled list, not a grid of boxes. */
 .card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  gap: 1.25rem;
   list-style: none;
   margin: 0;
   padding: 0;
+  border-top: 1px solid var(--border);
+}
+
+.card-grid > li {
+  border-bottom: 1px solid var(--border);
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 1.5rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.35rem 2rem;
+  padding: 1.5rem 0;
+}
+
+@media (min-width: 48rem) {
+  .card {
+    grid-template-columns: 11rem minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+  }
+  .card .status {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0.35rem 0 0;
+  }
+  .card h3,
+  .card p,
+  .card__link {
+    grid-column: 2;
+  }
+}
+
+.card h3 {
+  margin: 0 0 0.25rem;
 }
 
 .card p {
   color: var(--text-muted);
+  margin: 0 0 0.5rem;
+  max-width: var(--measure);
 }
 
 .card__link {
-  margin-top: auto;
-  font-weight: 600;
+  justify-self: start;
 }
 
-/* Status badges: text carries the meaning; color is secondary. */
+/* Status: mono text with a mark. Text carries the meaning; color is secondary. */
 .status {
   display: inline-block;
-  align-self: flex-start;
-  margin-bottom: 0.75rem;
-  padding: 0.15rem 0.6rem;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  font-size: 0.82rem;
-  font-weight: 600;
+  text-transform: uppercase;
   color: var(--text-muted);
-  background: var(--bg-subtle);
+  margin-bottom: 0.5rem;
 }
 
-.status--in-progress {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: var(--accent-soft);
+.status::before {
+  content: '\25CF\00a0';
+  color: var(--border-strong);
+}
+
+.status--in-progress::before {
+  color: var(--text-muted);
 }
 
 .status--published {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: var(--accent-contrast);
+  color: var(--accent);
 }
 
-/* Project list */
+.status--published::before {
+  color: var(--accent);
+}
+
+/* Full project list */
 .entry-list {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  gap: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.entry-list > li {
+  border-bottom: 1px solid var(--border);
 }
 
 .entry {
-  padding: 1.5rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
+  padding: 2.25rem 0;
   scroll-margin-top: 1.5rem;
+  max-width: calc(var(--measure) + 10rem);
 }
 
 .entry h2 {
-  margin-top: 0;
-  font-size: 1.35rem;
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.5rem, 1.3rem + 0.7vw, 1.9rem);
+}
+
+.entry > p {
+  max-width: var(--measure);
 }
 
 .entry__meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1rem;
-  align-items: center;
-  font-size: 0.95rem;
+  gap: 0.5rem 1.5rem;
+  align-items: baseline;
+  margin-top: 0.5rem;
 }
 
 .entry__meta .status {
@@ -446,19 +511,15 @@ code {
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.25rem 0;
   list-style: none;
   margin: 0 0 1rem;
   padding: 0;
+  color: var(--text-muted);
 }
 
-.tags li {
-  font-size: 0.85rem;
-  padding: 0.1rem 0.55rem;
-  border-radius: 6px;
-  background: var(--bg-subtle);
-  border: 1px solid var(--border);
-  color: var(--text-muted);
+.tags li + li::before {
+  content: '\00a0\00b7\00a0';
 }
 
 /* Visible placeholder text, so unfilled content is obvious on the page. */
@@ -466,21 +527,24 @@ code {
   background: var(--placeholder-bg);
   color: var(--placeholder-text);
   padding: 0.05rem 0.35rem;
-  border-radius: 4px;
   font-size: 0.95em;
 }
 
-/* Call to action band */
+/* Call to action: a ruled band, no fill. */
 .cta {
-  margin: 3rem 0 0;
-  padding: 2rem;
-  border-radius: var(--radius);
-  background: var(--accent-soft);
-  border: 1px solid var(--border);
+  margin: 3.5rem 0 0;
+  padding: 2rem 0 2.25rem;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 .cta h2 {
   margin-top: 0;
+  font-style: italic;
+}
+
+.cta p {
+  max-width: var(--measure);
 }
 
 .cta__actions {
@@ -490,12 +554,10 @@ code {
   margin-top: 1.25rem;
 }
 
-/* Footer */
+/* Footer: mono, one hairline above. */
 .site-footer {
   margin-top: 4rem;
   border-top: 1px solid var(--border);
-  background: var(--bg-subtle);
-  font-size: 0.95rem;
   color: var(--text-muted);
 }
 
@@ -504,66 +566,119 @@ code {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 1rem;
-  padding-top: 1.75rem;
-  padding-bottom: 1.75rem;
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
 }
 
 .site-footer ul {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1.25rem;
+  gap: 0.5rem 1.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.site-footer a {
+  color: var(--text-muted);
+}
+
+.site-footer a:hover {
+  color: var(--accent);
 }
 
 .site-footer p {
   margin: 0;
 }
 
-/* Writing index */
+/* Writing index: date in mono above a serif title, ruled. */
 .post-list {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  gap: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.post-list > li {
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem 0;
 }
 
 .post-list time {
-  font-size: 0.9rem;
   color: var(--text-muted);
+  text-transform: uppercase;
 }
 
 .post-list h2 {
-  margin: 0.25rem 0 0.4rem;
-  font-size: 1.3rem;
+  margin: 0.35rem 0 0.4rem;
+  font-size: 1.5rem;
+}
+
+.post-list h2 a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.post-list h2 a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.post-list p {
+  max-width: var(--measure);
 }
 
 .empty-state {
-  padding: 1.5rem;
-  border: 1px dashed var(--border);
-  border-radius: var(--radius);
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
   color: var(--text-muted);
+  font-style: italic;
 }
 
-/* Focus area list on About */
+/* Focus areas on About: three ruled columns, no boxes. */
 .focus-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0 2.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-/* Article body */
+.focus-grid .card {
+  display: block;
+  padding: 1.25rem 0 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.focus-grid .card h3 {
+  font-style: italic;
+}
+
+.focus-grid .card p:last-child {
+  color: var(--text);
+  font-size: 1rem;
+}
+
+/* Article */
 .article-header {
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.article-header p:first-child {
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.article-header h1 {
+  margin-bottom: 0.75rem;
 }
 
 .article-body h2 {
-  margin-top: 2.25rem;
+  margin-top: 2.5rem;
 }
 
 .article-body ul,
@@ -572,27 +687,28 @@ code {
 }
 
 .article-body blockquote {
-  margin: 1.25rem 0;
-  padding: 0.25rem 1rem;
-  border-left: 4px solid var(--accent);
+  margin: 1.5rem 0;
+  padding: 0 0 0 1.25rem;
+  border-left: 1px solid var(--border-strong);
   color: var(--text-muted);
+  font-style: italic;
 }
 
 @media (max-width: 40rem) {
   body {
-    font-size: 1rem;
+    font-size: 1.0625rem;
   }
   .section {
-    padding: 2rem 0;
+    padding: 2.25rem 0 1.5rem;
   }
-  .cta {
-    padding: 1.5rem;
+  .lede {
+    font-size: 1.2rem;
   }
   .site-header__inner {
-    column-gap: 0.75rem;
+    column-gap: 1rem;
   }
   .brand {
-    font-size: 1rem;
+    font-size: 1.15rem;
   }
   .header-actions {
     gap: 0.5rem;
@@ -607,7 +723,8 @@ code {
 @media (prefers-reduced-motion: no-preference) {
   a,
   .button,
-  .theme-toggle {
+  .theme-toggle,
+  .site-nav a {
     transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
   }
 }

@@ -60,7 +60,8 @@
   --color-placeholder-bg: var(--placeholder-bg);
   --color-placeholder-text: var(--placeholder-text);
 
-  --font-sans: "Figtree Variable", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
 
   --radius-site: var(--radius);
   --container-measure: var(--measure);
