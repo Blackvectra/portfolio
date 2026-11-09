@@ -883,3 +883,15 @@ code {
 .focus-grid .card .focus__links {
   margin-top: 0.25rem;
 }
+
+
+/* The header is sticky, so anything reached by an in-page link has to stop
+   below it. Declared last so it outranks per-component scroll margins. */
+:target {
+  scroll-margin-top: 5.5rem;
+}
+@media (max-width: 40rem) {
+  :target {
+    scroll-margin-top: 7.5rem;
+  }
+}
