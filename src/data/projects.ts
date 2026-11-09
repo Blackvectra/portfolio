@@ -82,7 +82,7 @@ export const projects: Project[] = [
       'A read-only assessment tool that collects tenant configuration through Microsoft Graph and reports each check as pass, fail, not applicable, not assessed, or inconclusive. "Not assessed" and "inconclusive" are kept separate from "pass" so a permission gap or a failed query is reported as such instead of as a clean result. PowerShell 7, read-only against Microsoft Graph and Exchange Online. Controls are mapped to CIS Microsoft 365 Foundations v7, CISA SCuBA and NIST SP 800-53, with Conditional Access and Intune checklists aligned to Maester, and the output is a client-facing report. Public and under active development.',
     problem:
       'An assessment is only useful if its findings are accurate. The tool has to tell a confirmed gap apart from a collection error or a control nobody assessed, and a missing license should not be reported as a failing control.',
-    role: "My project, published as TenantPosture. I design, write, and test it, and I'm working through its false findings myself.",
+    role: "Published as TenantPosture. I design, write, and test it, and I'm working through its false findings myself.",
     deliverable:
       'A read-scope assessment run over 253 controls, each with framework references, reported with distinct result states and gated by a Pester test suite.',
     built: [

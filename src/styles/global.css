@@ -430,6 +430,7 @@ code {
   .card p,
   .card__link,
   .card__facts,
+  .card__points,
   .card .tags,
   .card__links {
     grid-column: 2;
@@ -882,4 +883,30 @@ code {
 }
 .focus-grid .card .focus__links {
   margin-top: 0.25rem;
+}
+
+
+/* Experience rows: the role line above the list, and the detail bullets. */
+.role-line {
+  margin: 0 0 0.9rem;
+}
+.card__points {
+  margin: 0 0 0.6rem;
+  padding-left: 1.2rem;
+  color: var(--text-muted);
+  max-width: var(--measure);
+}
+.card__points li + li {
+  margin-top: 0.25rem;
+}
+
+/* The header is sticky, so anything reached by an in-page link has to stop
+   below it. Declared last so it outranks per-component scroll margins. */
+:target {
+  scroll-margin-top: 5.5rem;
+}
+@media (max-width: 40rem) {
+  :target {
+    scroll-margin-top: 7.5rem;
+  }
 }

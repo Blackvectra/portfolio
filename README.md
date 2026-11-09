@@ -1,6 +1,6 @@
 # mattlevorson.com
 
-Static portfolio site for Matthew Levorson: projects, technical write-ups, and a route to NextlayerSec for consulting work. Built with [Astro](https://astro.build/) as plain static HTML and CSS. No analytics, cookies, forms, embeds, or third-party requests.
+Static portfolio site for Matthew Levorson: work experience, projects, and technical write-ups. Built with [Astro](https://astro.build/) as plain static HTML and CSS. No analytics, cookies, forms, embeds, or third-party requests.
 
 ## Requirements
 
@@ -41,6 +41,7 @@ npm run preview   # serves dist/ locally
 
 - **Projects**: `src/data/projects.ts`. Each entry has a category, summary, problem, role, one-line deliverable, what was built, validation performed, limitations, a status (`planned`, `in-progress`, `published`), a link, and optional extra links. Home shows a scannable card per project; `/projects/` shows the full entry. A link that is not a URL or internal path renders as visible placeholder text.
 - **Writing**: Markdown files in `src/content/writing/` with frontmatter `title`, `date`, `summary`, `status` (`draft` or `published`). Drafts get no page, no index entry, and no sitemap entry. `case-study-template.md` is the case study template; copy it to start a new one.
+- **Experience**: `src/data/experience.ts`. Work done in employment, at resume-level detail with no client names. Home shows one row per entry; About shows the full entries.
 - **Links and site facts**: `src/data/site.ts` (LinkedIn, GitHub). **Certifications**: `src/data/certifications.ts`; the year is optional and left blank until known.
 
 ## Security headers and CSP
@@ -57,7 +58,7 @@ Do not loosen the CSP to make something work. Move the code to an external file 
 
 ## Styling
 
-Editorial and monospace, deliberately not the look of the NextlayerSec
+Editorial and monospace, deliberately not the look of the NextLayerSec
 business site. Serif for reading (Newsreader, optical-size axis, self-hosted
 from `@fontsource-variable/newsreader`), monospace for labels, dates, tags,
 navigation and code (IBM Plex Mono, `@fontsource/ibm-plex-mono`), one accent

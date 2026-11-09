@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ExperienceRow from '../../components/ExperienceRow.astro';
 import MaybeLink from '../../components/MaybeLink.astro';
 import { links, site } from '../../data/site';
 import { certificationsLine } from '../../data/certifications';
+import { experience, role } from '../../data/experience';
 
 // Each focus area is split into scope and standards, tooling and method, and
 // the deliverable, so a reader can find the part they care about, and links
@@ -45,15 +47,23 @@ const focusAreas = [
 const background = [
   {
     label: 'Current role',
-    text: 'Security engineer at NRG Technology Services, a managed service provider: threat intelligence, incident response, endpoint security, and Microsoft 365 and Entra ID administration across client tenants.',
+    text: `${role.title} at ${role.employer}, a ${role.employerKind}, since May 2023: identity, endpoint, and email security for 35 Microsoft 365 client tenants, detection triage, and assessment tooling.`,
+  },
+  {
+    label: 'Independent practice',
+    text: `Founder of ${site.business}: Microsoft 365 and Entra ID hardening and DMARC enforcement for small businesses. One healthcare engagement raised the client's Microsoft Secure Score from 35 to 73.`,
   },
   {
     label: 'Education',
-    text: 'M.S. in Cyber Security, University of North Dakota (in progress).',
+    text: 'M.S. in Cyber Security, University of North Dakota (in progress, started fall 2026). B.A.S. in Cybersecurity and Information Technology, Bismarck State College (December 2025).',
   },
   {
     label: 'Certifications',
     text: `${certificationsLine}.`,
+  },
+  {
+    label: 'Recognition',
+    text: 'National Cyber League, spring 2025: 28th nationally in the Team Game and 873rd of 8,569 in the Individual Game. InfraGard member since 2026.',
   },
 ];
 ---
@@ -65,8 +75,9 @@ const background = [
     <section class="section prose">
       <h1>About</h1>
       <p class="lede">
-        I'm {site.name}, a security engineer based in {site.location}. I work on Microsoft 365 and
-        Entra security, enterprise email security, and DMARC enforcement, and I <a href="/projects/">write up what I build</a>.
+        I'm {site.name}, a security engineer based in {site.location}. I roll out identity,
+        endpoint, and email security controls for a managed service provider's Microsoft 365
+        clients, investigate detections, and <a href="/projects/">write up what I build</a>.
       </p>
       <h2>Background</h2>
       <ul>
@@ -79,6 +90,20 @@ const background = [
       <p id="contact">
         Elsewhere: <MaybeLink href={links.linkedin}>LinkedIn</MaybeLink> &middot; <MaybeLink href={links.github}>GitHub</MaybeLink>
       </p>
+    </section>
+
+    <section class="home-section" aria-labelledby="experience-heading">
+      <h2 id="experience-heading">Experience</h2>
+      <p class="mono muted role-line">{role.title} &middot; {role.employer} &middot; {role.period}</p>
+      <ul class="card-grid">
+        {
+          experience.map((entry) => (
+            <li>
+              <ExperienceRow entry={entry} detailed />
+            </li>
+          ))
+        }
+      </ul>
     </section>
 
     <section aria-labelledby="focus-heading">
