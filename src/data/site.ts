@@ -8,7 +8,7 @@
 export const site = {
   name: 'Matthew Levorson',
   role: 'Security engineer',
-  business: 'NextlayerSec LLC',
+  business: 'NextLayerSec LLC',
   location: 'North Dakota',
   description:
     'Matthew Levorson, security engineer. Microsoft 365 and Entra security assessments, enterprise email security, and DMARC enforcement.',

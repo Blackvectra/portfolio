@@ -1,6 +1,6 @@
 # mattlevorson.com
 
-Static portfolio site for Matthew Levorson: projects, technical write-ups, and a route to NextlayerSec for consulting work. Built with [Astro](https://astro.build/) as plain static HTML and CSS. No analytics, cookies, forms, embeds, or third-party requests.
+Static portfolio site for Matthew Levorson: projects, technical write-ups, and a route to NextLayerSec for consulting work. Built with [Astro](https://astro.build/) as plain static HTML and CSS. No analytics, cookies, forms, embeds, or third-party requests.
 
 ## Requirements
 
@@ -57,7 +57,7 @@ Do not loosen the CSP to make something work. Move the code to an external file 
 
 ## Styling
 
-Editorial and monospace, deliberately not the look of the NextlayerSec
+Editorial and monospace, deliberately not the look of the NextLayerSec
 business site. Serif for reading (Newsreader, optical-size axis, self-hosted
 from `@fontsource-variable/newsreader`), monospace for labels, dates, tags,
 navigation and code (IBM Plex Mono, `@fontsource/ibm-plex-mono`), one accent
