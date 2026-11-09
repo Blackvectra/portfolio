@@ -47,8 +47,7 @@ const posts = (await getPublishedWriting()).slice(0, 3);
       {
         posts.length === 0 ? (
           <p class="empty-state">
-            Nothing published here yet. In the meantime, my blue-team playbooks and detection notes are on{' '}
-            <a href="https://github.com/Blackvectra/nextlayersec-guides">GitHub</a>.
+            Nothing published here yet.
           </p>
         ) : (
           <ul class="post-list">

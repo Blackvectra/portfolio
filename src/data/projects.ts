@@ -40,7 +40,7 @@ export interface Project {
   topics: string[];
 }
 
-export const projects = [
+export const projects: Project[] = [
   {
     id: 'email-security-build',
     title: 'Email security build on my own domain',
@@ -108,66 +108,6 @@ export const projects = [
     topics: ['Microsoft Graph', 'Entra ID', 'Microsoft 365', 'Intune', 'Read-only'],
   },
   {
-    id: 'entra-passkey-readiness',
-    title: 'Entra passkey readiness',
-    category: 'Identity · Microsoft Entra ID',
-    summary:
-      'A read-only PowerShell 7 assessment that identifies which Entra ID users are exposed to the retirement of Microsoft-provided SMS and voice authentication, and which of them are ready for passkeys. Five scripts assess one tenant, sweep many, compare runs, roll results up into an HTML estate report, and offer a small GUI. Version 1.0.0 was released in August 2026 and development continues.',
-    problem:
-      "The Entra portal doesn't directly answer which specific users are both targeted by the SMS and voice authentication methods policy and unable to satisfy MFA without it once those methods retire. Finding them by hand across a tenant, or across many tenants, is slow and error-prone.",
-    role: 'My project. I wrote and tested it.',
-    deliverable:
-      'Five scripts that assess one tenant, sweep many, compare runs, roll results up into an HTML estate report, and offer a GUI, all through read-only Graph calls.',
-    built: [
-      "A per-tenant assessment that cross-references the authentication methods policy with each user's registered methods to find who is exposed and who is passkey-ready",
-      'A multi-tenant sweep, a run-to-run comparison, and an HTML estate roll-up for reporting across tenants',
-      'A WPF front end for running the sweep without the command line',
-      'Read-only by design. The only non-GET Graph call is the $batch envelope, which carries GET requests',
-      'Synthetic example tenants and documented usage, under an MIT license',
-    ],
-    validation: [
-      '384 Pester tests across 23 files, run in CI on every push',
-      'A changelog from 1.0.0 onward records what each change fixed',
-    ],
-    limitations: ['Client-side only; it reports exposure and readiness and changes nothing in the tenant'],
-    status: 'published',
-    link: 'https://github.com/Blackvectra/entra-passkey-readiness',
-    linkLabel: 'View the project',
-    topics: ['Microsoft Graph', 'Entra ID', 'MFA', 'Passkeys', 'PowerShell'],
-  },
-  {
-    id: 'nextlayersec-guides',
-    title: 'Blue-team guides and detections',
-    category: 'Detection engineering · Knowledge base',
-    summary:
-      'A blue-team knowledge base published as a documentation site, with detections kept as code alongside incident-response playbooks, hardening guides, and plain-language framework explainers. Twelve KQL queries, twelve Sigma rules, and a YARA rule are validated for structure in CI, and the repository runs CodeQL, OpenSSF Scorecard, secret scanning, and OSV dependency scanning against itself.',
-    problem:
-      "Detection rules and response playbooks scattered across notes and tickets drift out of date and can't be tested. Keeping them in a repository with validators and CI means a broken rule or a stale page fails a check instead of surviving unnoticed.",
-    role: "Written and maintained by me under the NextLayerSec name. It's reference material, not a product.",
-    deliverable:
-      'A versioned, CI-checked knowledge base with 12 KQL and 12 Sigma detections, a YARA rule, Python validators, and a published documentation site.',
-    built: [
-      'Detections as code: 12 KQL queries, 12 Sigma rules, and a YARA rule, with Python validators that check their structure',
-      'Incident-response playbooks and detection workflows',
-      'Hardening guides and explainers for NIST CSF, MITRE ATT&CK, ISO 27001, IRS 1075, and SOC 2',
-      'A MkDocs Material site deployed from the repository',
-      'Repository hygiene workflows: CodeQL, OpenSSF Scorecard, secret scanning, and OSV dependency scanning',
-    ],
-    validation: [
-      'Pytest suites for the content and rule validators, run with lint and content-correctness checks on every push',
-      'CodeQL, Scorecard, secret-scan, and OSV workflows run against the repository itself',
-    ],
-    limitations: [
-      'The framework explainers are summaries for orientation, not compliance guidance',
-      'Rules are validated for structure in CI; they are not run against live telemetry there',
-    ],
-    status: 'published',
-    link: 'https://github.com/Blackvectra/nextlayersec-guides',
-    linkLabel: 'View the repository',
-    extraLinks: [{ label: 'Read the docs', href: 'https://blackvectra.github.io/nextlayersec-guides/' }],
-    topics: ['KQL', 'Sigma', 'YARA', 'Python', 'MkDocs'],
-  },
-  {
     id: 'dmarc-enforcement-methodology',
     title: 'DMARC enforcement methodology',
     category: 'Email security · Method',
@@ -189,4 +129,4 @@ export const projects = [
     linkLabel: 'Read the current notes',
     topics: ['DMARC', 'SPF', 'DKIM', 'Sender inventory', 'Rollback'],
   },
-] satisfies Project[];
+];
