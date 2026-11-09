@@ -39,9 +39,9 @@ npm run preview   # serves dist/ locally
 
 ## Content
 
-- **Projects**: `src/data/projects.ts`. Each entry has a summary, a status (`planned`, `in-progress`, `published`), and a link. A link that is not a URL or internal path renders as visible placeholder text.
+- **Projects**: `src/data/projects.ts`. Each entry has a category, summary, problem, role, one-line deliverable, what was built, validation performed, limitations, a status (`planned`, `in-progress`, `published`), a link, and optional extra links. Home shows a scannable card per project; `/projects/` shows the full entry. A link that is not a URL or internal path renders as visible placeholder text.
 - **Writing**: Markdown files in `src/content/writing/` with frontmatter `title`, `date`, `summary`, `status` (`draft` or `published`). Drafts get no page, no index entry, and no sitemap entry. `case-study-template.md` is the case study template; copy it to start a new one.
-- **Links and site facts**: `src/data/site.ts` (LinkedIn, GitHub, booking link).
+- **Links and site facts**: `src/data/site.ts` (LinkedIn, GitHub). **Certifications**: `src/data/certifications.ts`; the year is optional and left blank until known.
 
 ## Security headers and CSP
 
