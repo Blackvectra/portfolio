@@ -8,17 +8,35 @@ const focusAreas = [
   {
     title: 'Identity',
     text: 'Microsoft Entra ID and Microsoft 365 tenant security, reviewed through read-only assessment.',
-    detail: '[PLACEHOLDER: one sentence on the identity work you do]',
+    detail:
+      'Conditional Access and MFA posture, checked with read-only Microsoft Graph tooling: which users are still on SMS or voice ahead of Microsoft retiring both, whether the passkey method they are being moved to is actually enabled and in scope for them, and where a policy exists on paper but is not enforced.',
   },
   {
     title: 'Endpoint',
-    text: '',
-    detail: '[PLACEHOLDER: one or two sentences on the endpoint work you do and the platforms involved]',
+    text: 'Microsoft Intune and Defender for Endpoint on Windows 11.',
+    detail:
+      'Settings Catalog baselines curated from CIS, the CISA Secure Configuration Baseline and the HIPAA Security Rule, Attack Surface Reduction rule sets tuned to the client (healthcare EHR, law firm, AVD), and compliance, LAPS and antivirus checks read the way Maester reads them, with a dry run before anything is applied.',
   },
   {
     title: 'Email Security',
     text: 'SPF, DKIM, DMARC, MTA-STS, and DANE, with a focus on getting domains to DMARC enforcement.',
-    detail: '[PLACEHOLDER: one sentence on the email security work you do]',
+    detail:
+      'Deployed end to end on domains I run: DMARC at p=reject with strict alignment, MTA-STS in enforce mode with TLS-RPT, and DNSSEC with Exchange Online’s DNSSEC-aware MX endpoint, then written up as a repeatable framework with the DNS records, the PowerShell, and the validation steps.',
+  },
+];
+
+const background = [
+  {
+    label: 'Current role',
+    text: 'Security engineer at NRG Technology Services, a managed service provider: threat intelligence, incident response, endpoint security, and Microsoft 365 and Entra ID administration across client tenants.',
+  },
+  {
+    label: 'Education',
+    text: 'M.S. in Cyber Security, University of North Dakota (in progress).',
+  },
+  {
+    label: 'Certifications',
+    text: 'CompTIA CySA+ (2026), CompTIA Security+ (2025), ISC2 Certified in Cybersecurity (2025), CompTIA A+ (2024).',
   },
 ];
 ---
@@ -36,9 +54,11 @@ const focusAreas = [
       </p>
       <h2>Background</h2>
       <ul>
-        <li>Current role: <span class="placeholder">[PLACEHOLDER: employer line, or remove]</span></li>
-        <li>Education: <span class="placeholder">[PLACEHOLDER: education]</span></li>
-        <li>Certifications: <span class="placeholder">[PLACEHOLDER: certifications, or remove]</span></li>
+        {background.map((item) => (
+          <li>
+            <strong>{item.label}:</strong> {item.text}
+          </li>
+        ))}
       </ul>
       <p>
         Elsewhere: <MaybeLink href={links.linkedin}>LinkedIn</MaybeLink> &middot; <MaybeLink href={links.github}>GitHub</MaybeLink>
@@ -52,8 +72,8 @@ const focusAreas = [
           focusAreas.map((area) => (
             <li class="card">
               <h3>{area.title}</h3>
-              {area.text && <p>{area.text}</p>}
-              <p><span class="placeholder">{area.detail}</span></p>
+              <p>{area.text}</p>
+              <p>{area.detail}</p>
             </li>
           ))
         }

@@ -1,5 +1,7 @@
-# [PLACEHOLDER: replace the Contact URL below with your real security contact page or profile URL]
-Contact: https://PLACEHOLDER.invalid/security-contact
+# RFC 9116 security contact for mattlevorson.com.
+# Reports go through the NextlayerSec contact form, the same channel the
+# nextlayersec.io security.txt uses. No email address here by design.
+Contact: https://nextlayersec.io/contact
 Expires: 2027-10-31T00:00:00Z
 Preferred-Languages: en
 Canonical: https://mattlevorson.com/.well-known/security.txt
