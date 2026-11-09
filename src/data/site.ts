@@ -17,8 +17,7 @@ export const site = {
 export const links = {
   /** Business site; linked once, in the footer. */
   nextlayersec: 'https://nextlayersec.io/',
-  /** NextlayerSec company page. Swap for a personal profile URL if preferred. */
-  linkedin: 'https://linkedin.com/company/nextlayersec',
+  linkedin: 'https://www.linkedin.com/in/matthew-l-116776227',
   github: 'https://github.com/Blackvectra',
 } as const;
 
