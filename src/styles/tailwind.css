@@ -1,0 +1,68 @@
+/*
+  Single stylesheet entry. Tailwind 4 (CSS-first) around the site's own CSS.
+
+  No preflight: global.css already owns the reset, the base element styles
+  and the design tokens, and Tailwind's reset would change the rendered site.
+  Utilities only, in a layer above the site's CSS so a utility on an element
+  wins over a base rule, which is what a utility is for.
+*/
+@import "tailwindcss/theme.css" layer(theme);
+@import "./global.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+
+/*
+  Only src/ is scanned for class names. Tailwind's default scans the whole
+  project, and class names mentioned in README.md would generate utilities
+  nobody uses. This file is scanned too, so its comments avoid naming
+  utilities. The layout wrapper class is .wrap rather than the name of
+  Tailwind's own width utility, so the two never collide.
+*/
+@source "../";
+
+/*
+  dark: follows the theme toggle, not only the OS. public/theme.js sets
+  data-theme="dark" or "light" from the stored choice; with nothing stored,
+  no attribute is set and the OS preference applies. Same rule as the token
+  blocks in global.css.
+*/
+@custom-variant dark {
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(:not([data-theme="light"]), :not([data-theme="light"]) *) {
+      @slot;
+    }
+  }
+}
+
+/*
+  The design tokens as Tailwind theme values: each colour token gets its
+  background, text and border utilities, the radius and the two widths get
+  theirs.
+  "inline" keeps them as references to the CSS variables, which resolve at
+  paint time, so a utility switches with the theme on its own; no dark:
+  prefix is needed for a token colour.
+*/
+@theme inline {
+  --color-*: initial;
+  --color-bg: var(--bg);
+  --color-bg-subtle: var(--bg-subtle);
+  --color-surface: var(--surface);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-accent-soft: var(--accent-soft);
+  --color-focus: var(--focus);
+  --color-placeholder-bg: var(--placeholder-bg);
+  --color-placeholder-text: var(--placeholder-text);
+
+  --font-sans: "Figtree Variable", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --radius-site: var(--radius);
+  --container-measure: var(--measure);
+  --container-max: var(--max);
+}
