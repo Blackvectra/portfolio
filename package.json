@@ -1,0 +1,16 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "description": "mattlevorson.com — static portfolio served by a Cloudflare Worker (Workers Static Assets)",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "check": "wrangler deploy --dry-run --outdir=dist"
+  },
+  "devDependencies": {
+    "wrangler": "4.156.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

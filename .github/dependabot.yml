@@ -1,0 +1,14 @@
+# Keeps Wrangler (the only dependency) current. Workers Builds runs whatever
+# version package.json pins, so a bump here is what moves the deploy tooling.
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 2
+    # Wait a week after a release before proposing it.
+    cooldown:
+      default-days: 7
+    commit-message:
+      prefix: "build(deps)"
