@@ -19,7 +19,12 @@ const posts = (await getPublishedWriting()).slice(0, 3);
         tenants. I roll out identity, endpoint, and email security controls, investigate detections,
         and build tooling to check what is actually enforced.
       </p>
-      <p class="prose muted">Work experience, projects, and the certifications behind them.</p>
+      <div class="cert-line">
+        <span class="mono muted" id="cert-line-label">Certifications</span>
+        <ul class="tags" aria-labelledby="cert-line-label">
+          {certifications.map((cert) => <li>{cert.short}</li>)}
+        </ul>
+      </div>
       <p class="intro-actions">
         <a class="button" href="/projects/">View projects</a>
         <a href="/about/#contact">Contact</a>

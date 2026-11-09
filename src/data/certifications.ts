@@ -6,19 +6,21 @@
 export interface Certification {
   name: string;
   issuer: string;
+  /** Short form for the line under the home headline, e.g. "CySA+". */
+  short: string;
   /** Year earned. Leave out until known; the year column stays blank. */
   year?: number;
 }
 
 export const certifications = [
-  { name: 'CompTIA CySA+', issuer: 'CompTIA', year: 2026 },
-  { name: 'CompTIA Security+', issuer: 'CompTIA', year: 2025 },
-  { name: 'Certified in Cybersecurity', issuer: 'ISC2', year: 2025 },
-  { name: 'CompTIA A+', issuer: 'CompTIA', year: 2024 },
+  { name: 'CompTIA CySA+', issuer: 'CompTIA', short: 'CySA+', year: 2026 },
+  { name: 'CompTIA Security+', issuer: 'CompTIA', short: 'Security+', year: 2025 },
+  { name: 'Certified in Cybersecurity', issuer: 'ISC2', short: 'ISC2 CC', year: 2025 },
+  { name: 'CompTIA A+', issuer: 'CompTIA', short: 'A+', year: 2024 },
   // Years to be confirmed by the owner.
-  { name: 'CompTIA PenTest+', issuer: 'CompTIA' },
-  { name: 'CompTIA Linux+', issuer: 'CompTIA' },
-  { name: 'CompTIA Network+', issuer: 'CompTIA' },
+  { name: 'CompTIA PenTest+', issuer: 'CompTIA', short: 'PenTest+' },
+  { name: 'CompTIA Linux+', issuer: 'CompTIA', short: 'Linux+' },
+  { name: 'CompTIA Network+', issuer: 'CompTIA', short: 'Network+' },
 ] satisfies Certification[];
 
 /**
