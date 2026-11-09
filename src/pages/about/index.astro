@@ -4,24 +4,44 @@ import MaybeLink from '../../components/MaybeLink.astro';
 import { links, site } from '../../data/site';
 import { certificationsLine } from '../../data/certifications';
 
+// Each focus area is split into scope and standards, tooling and method, and
+// the deliverable, so a reader can find the part they care about, and links
+// to the projects that back it.
 const focusAreas = [
   {
     title: 'Identity',
-    text: 'Microsoft Entra ID and Microsoft 365 tenant security, reviewed through read-only assessment.',
-    detail:
-      'Conditional Access and MFA posture, checked with read-only Microsoft Graph tooling: which users are still on SMS or voice ahead of Microsoft retiring both, whether the passkey method they are being moved to is actually enabled and in scope for them, and where a policy exists on paper but is not enforced.',
+    scope:
+      'Microsoft Entra ID and Microsoft 365 tenant security: Conditional Access and MFA posture, and where a policy exists on paper but is not enforced.',
+    tooling: 'Read-only Microsoft Graph tooling in PowerShell 7, with Pester test gates.',
+    deliverable:
+      'Which users are still on SMS or voice ahead of Microsoft retiring both, whether the passkey method they are being moved to is actually enabled and in scope for them, and tenant assessment findings mapped to CIS, CISA SCuBA, and NIST SP 800-53.',
+    projects: [
+      { label: 'Assessment tool', href: '/projects/#m365-entra-assessment-tool' },
+      { label: 'Passkey readiness', href: '/projects/#entra-passkey-readiness' },
+    ],
   },
   {
     title: 'Endpoint',
-    text: 'Microsoft Intune and Defender for Endpoint on Windows 11.',
-    detail:
-      'Settings Catalog baselines curated from CIS, the CISA Secure Configuration Baseline and the HIPAA Security Rule, Attack Surface Reduction rule sets tuned to the client (healthcare EHR, law firm, AVD), and compliance, LAPS and antivirus checks read the way Maester reads them, with a dry run before anything is applied.',
+    scope:
+      'Microsoft Intune and Defender for Endpoint on Windows 11, with baselines curated from CIS, the CISA Secure Configuration Baseline, and the HIPAA Security Rule.',
+    tooling:
+      'Settings Catalog baselines, Attack Surface Reduction rule sets tuned to the client (healthcare EHR, law firm, AVD), and compliance, LAPS, and antivirus checks read the way Maester reads them.',
+    deliverable:
+      'Baselines applied with a dry run before anything changes, and device-compliance findings inside the tenant assessment.',
+    projects: [{ label: 'Assessment tool', href: '/projects/#m365-entra-assessment-tool' }],
   },
   {
     title: 'Email Security',
-    text: 'SPF, DKIM, DMARC, MTA-STS, and DANE, with a focus on getting domains to DMARC enforcement.',
-    detail:
-      'Deployed end to end on domains I run: DMARC at p=reject with strict alignment, MTA-STS in enforce mode with TLS-RPT, and DNSSEC with Exchange Online’s DNSSEC-aware MX endpoint, then written up as a repeatable framework with the DNS records, the PowerShell, and the validation steps.',
+    scope:
+      'SPF, DKIM, DMARC, MTA-STS, TLS-RPT, DNSSEC, and DANE on Exchange Online domains, with a focus on getting domains to DMARC enforcement.',
+    tooling:
+      'Exchange Online PowerShell, DNS record templates, MTA-STS policy hosting, and DMARC aggregate report review.',
+    deliverable:
+      "Deployed end to end on domains I run: DMARC at p=reject with strict alignment, MTA-STS in enforce mode with TLS-RPT, and DNSSEC with Exchange Online's DNSSEC-aware MX endpoint, written up as a repeatable framework with the DNS records, the PowerShell, and the validation steps.",
+    projects: [
+      { label: 'Email security build', href: '/projects/#email-security-build' },
+      { label: 'DMARC methodology', href: '/projects/#dmarc-enforcement-methodology' },
+    ],
   },
 ];
 
@@ -49,7 +69,7 @@ const background = [
       <h1>About</h1>
       <p class="lede">
         I'm {site.name}, a security engineer based in {site.location}. I work on Microsoft 365 and
-        Entra security, enterprise email security, and DMARC enforcement, and I write up what I build.
+        Entra security, enterprise email security, and DMARC enforcement, and I <a href="/projects/">write up what I build</a>.
       </p>
       <h2>Background</h2>
       <ul>
@@ -59,7 +79,7 @@ const background = [
           </li>
         ))}
       </ul>
-      <p>
+      <p id="contact">
         Elsewhere: <MaybeLink href={links.linkedin}>LinkedIn</MaybeLink> &middot; <MaybeLink href={links.github}>GitHub</MaybeLink>
       </p>
     </section>
@@ -71,8 +91,27 @@ const background = [
           focusAreas.map((area) => (
             <li class="card">
               <h3>{area.title}</h3>
-              <p>{area.text}</p>
-              <p>{area.detail}</p>
+              <dl class="focus__facts">
+                <div>
+                  <dt>Scope and standards</dt>
+                  <dd>{area.scope}</dd>
+                </div>
+                <div>
+                  <dt>Tooling and method</dt>
+                  <dd>{area.tooling}</dd>
+                </div>
+                <div>
+                  <dt>Deliverable</dt>
+                  <dd>{area.deliverable}</dd>
+                </div>
+              </dl>
+              <p class="focus__links">
+                {area.projects.map((p) => (
+                  <a href={p.href}>
+                    {p.label}<span aria-hidden="true"> →</span>
+                  </a>
+                ))}
+              </p>
             </li>
           ))
         }
