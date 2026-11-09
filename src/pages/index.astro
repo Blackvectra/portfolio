@@ -17,6 +17,10 @@ const posts = (await getPublishedWriting()).slice(0, 3);
         security, and DMARC enforcement.
       </p>
       <p class="prose muted">Projects, technical write-ups, and the certifications behind them.</p>
+      <p class="intro-actions">
+        <a class="button" href="/projects/">View projects</a>
+        <a href="/about/#contact">Contact</a>
+      </p>
     </section>
 
     <section class="home-section" aria-labelledby="projects-heading">
@@ -70,7 +74,7 @@ const posts = (await getPublishedWriting()).slice(0, 3);
         {
           certifications.map((cert) => (
             <li>
-              <span class="cert-year">{cert.year}</span>
+              <span class="cert-year">{cert.year ?? ''}</span>
               <span class="cert-name">{cert.name}</span>
               <span class="cert-issuer">{cert.issuer}</span>
             </li>
