@@ -1,9 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import WorkWithMe from '../components/WorkWithMe.astro';
 import { projects } from '../data/projects';
+import { certifications } from '../data/certifications';
 import { site } from '../data/site';
+import { formatDate, getPublishedWriting } from '../lib/writing';
+
+const posts = (await getPublishedWriting()).slice(0, 3);
 ---
 <BaseLayout>
   <div class="wrap">
@@ -13,13 +16,14 @@ import { site } from '../data/site';
         Security engineer focused on Microsoft 365 and Entra security assessments, enterprise email
         security, and DMARC enforcement.
       </p>
-      <p class="prose muted">
-        This site holds my projects and technical write-ups. Consulting work runs through {site.business}.
-      </p>
+      <p class="prose muted">Projects, technical write-ups, and the certifications behind them.</p>
     </section>
 
-    <section aria-labelledby="projects-heading">
-      <h2 id="projects-heading">Projects</h2>
+    <section class="home-section" aria-labelledby="projects-heading">
+      <div class="section-head">
+        <h2 id="projects-heading">Projects</h2>
+        <a href="/projects/">All projects</a>
+      </div>
       <ul class="card-grid">
         {
           projects.map((project) => (
@@ -29,9 +33,50 @@ import { site } from '../data/site';
           ))
         }
       </ul>
-      <p class="section--tight"><a href="/projects/">All projects</a> &middot; <a href="/writing/">Writing</a></p>
     </section>
 
-    <WorkWithMe />
+    <section class="home-section" aria-labelledby="writing-heading">
+      <div class="section-head">
+        <h2 id="writing-heading">Writing</h2>
+        <a href="/writing/">All writing</a>
+      </div>
+      {
+        posts.length === 0 ? (
+          <p class="empty-state">
+            Nothing published here yet. In the meantime, my blue-team playbooks and detection notes are on{' '}
+            <a href="https://github.com/Blackvectra/nextlayersec-guides">GitHub</a>.
+          </p>
+        ) : (
+          <ul class="post-list">
+            {posts.map((post) => (
+              <li>
+                <article>
+                  <time datetime={post.data.date.toISOString().slice(0, 10)}>{formatDate(post.data.date)}</time>
+                  <h3>
+                    <a href={`/writing/${post.id}/`}>{post.data.title}</a>
+                  </h3>
+                  <p class="muted">{post.data.summary}</p>
+                </article>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </section>
+
+    <section class="home-section" aria-labelledby="certs-heading">
+      <h2 id="certs-heading">Certifications</h2>
+      <ul class="cert-list">
+        {
+          certifications.map((cert) => (
+            <li>
+              <span class="cert-year">{cert.year}</span>
+              <span class="cert-name">{cert.name}</span>
+              <span class="cert-issuer">{cert.issuer}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
   </div>
 </BaseLayout>

@@ -7,25 +7,15 @@ interface Props {
 }
 
 const { project } = Astro.props;
-// The card shows the opening of the summary: whole sentences up to about
-// 220 characters, never a cut mid-sentence. The full paragraph is on
-// /projects/, one click away. A placeholder, if one is ever reintroduced,
-// ends the lead before it.
+// The home page shows one sentence per project; the full paragraph is on
+// /projects/, which the title links to. A placeholder, if one is ever
+// reintroduced, ends the lead before it.
 const placeholderAt = project.summary.indexOf('[');
 const text = (placeholderAt > 0 ? project.summary.slice(0, placeholderAt) : project.summary).trim();
-const sentences = text.match(/[^.!?]+[.!?]+(?=\s|$)/g) ?? [text];
-let lead = '';
-for (const sentence of sentences) {
-  if (lead && (lead + sentence).length > 220) break;
-  lead += sentence;
-}
-lead = lead.trim() || text;
+const lead = (text.match(/^[^.!?]+[.!?]+(?=\s|$)/)?.[0] ?? text).trim();
 ---
 <article class="card">
   <StatusBadge status={project.status} />
-  <h3>{project.title}</h3>
+  <h3><a href={`/projects/#${project.id}`}>{project.title}</a></h3>
   <p>{lead}</p>
-  <a class="card__link" href={`/projects/#${project.id}`}>
-    Project details<span class="visually-hidden">: {project.title}</span>
-  </a>
 </article>
