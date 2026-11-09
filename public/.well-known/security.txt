@@ -1,0 +1,5 @@
+# [PLACEHOLDER: replace the Contact URL below with your real security contact page or profile URL]
+Contact: https://PLACEHOLDER.invalid/security-contact
+Expires: 2027-10-31T00:00:00Z
+Preferred-Languages: en
+Canonical: https://mattlevorson.com/.well-known/security.txt

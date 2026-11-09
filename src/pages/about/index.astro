@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MaybeLink from '../../components/MaybeLink.astro';
+import WorkWithMe from '../../components/WorkWithMe.astro';
+import { links, site } from '../../data/site';
+
+const focusAreas = [
+  {
+    title: 'Identity',
+    text: 'Microsoft Entra ID and Microsoft 365 tenant security, reviewed through read-only assessment.',
+    detail: '[PLACEHOLDER: one sentence on the identity work you do]',
+  },
+  {
+    title: 'Endpoint',
+    text: '',
+    detail: '[PLACEHOLDER: one or two sentences on the endpoint work you do and the platforms involved]',
+  },
+  {
+    title: 'Email Security',
+    text: 'SPF, DKIM, DMARC, MTA-STS, and DANE, with a focus on getting domains to DMARC enforcement.',
+    detail: '[PLACEHOLDER: one sentence on the email security work you do]',
+  },
+];
+---
+<BaseLayout
+  title="About"
+  description="About Matthew Levorson, security engineer and owner of NextlayerSec LLC, based in North Dakota."
+>
+  <div class="container">
+    <section class="section prose">
+      <h1>About</h1>
+      <p class="lede">
+        I'm {site.name}, a security engineer based in {site.location}. I own {site.business}, a
+        consulting practice focused on Microsoft 365 and Entra security assessments, enterprise email
+        security, and DMARC enforcement.
+      </p>
+      <h2>Background</h2>
+      <ul>
+        <li>Current role: <span class="placeholder">[PLACEHOLDER: employer line, or remove]</span></li>
+        <li>Education: <span class="placeholder">[PLACEHOLDER: education]</span></li>
+        <li>Certifications: <span class="placeholder">[PLACEHOLDER: certifications, or remove]</span></li>
+      </ul>
+      <p>
+        Elsewhere: <MaybeLink href={links.linkedin}>LinkedIn</MaybeLink> &middot; <MaybeLink href={links.github}>GitHub</MaybeLink>
+      </p>
+    </section>
+
+    <section aria-labelledby="focus-heading">
+      <h2 id="focus-heading">Focus areas</h2>
+      <ul class="focus-grid">
+        {
+          focusAreas.map((area) => (
+            <li class="card">
+              <h3>{area.title}</h3>
+              {area.text && <p>{area.text}</p>}
+              <p><span class="placeholder">{area.detail}</span></p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <WorkWithMe />
+  </div>
+</BaseLayout>

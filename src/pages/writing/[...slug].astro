@@ -1,0 +1,37 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WorkWithMe from '../../components/WorkWithMe.astro';
+import { formatDate, getPublishedWriting, type WritingEntry } from '../../lib/writing';
+
+// Only published entries get a page. Drafts produce no route at all.
+export const getStaticPaths = (async () => {
+  const posts = await getPublishedWriting();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  post: WritingEntry;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+<BaseLayout title={post.data.title} description={post.data.summary}>
+  <div class="container">
+    <article class="section prose">
+      <header class="article-header">
+        <p><a href="/writing/">Writing</a></p>
+        <h1>{post.data.title}</h1>
+        <p class="muted">
+          <time datetime={post.data.date.toISOString().slice(0, 10)}>{formatDate(post.data.date)}</time>
+        </p>
+      </header>
+      <div class="article-body">
+        <Content />
+      </div>
+    </article>
+    <WorkWithMe />
+  </div>
+</BaseLayout>

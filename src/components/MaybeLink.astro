@@ -1,0 +1,21 @@
+---
+// Renders a link when `href` is a real URL or internal path. Otherwise the
+// value is an unfilled placeholder and is shown as visible text, so the site
+// never ships a broken link.
+import { isLink } from '../data/site';
+
+interface Props {
+  href: string;
+  class?: string;
+}
+
+const { href, class: className } = Astro.props;
+const linked = isLink(href);
+---
+{
+  linked ? (
+    <a href={href} class={className}><slot /></a>
+  ) : (
+    <span class="placeholder">{href}</span>
+  )
+}
