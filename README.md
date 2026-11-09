@@ -55,6 +55,36 @@ Do not loosen the CSP to make something work. Move the code to an external file 
 
 `public/.well-known/security.txt` expires `2027-10-31T00:00:00Z`. Update it before then.
 
+## Styling
+
+`src/styles/tailwind.css` is the single stylesheet entry (imported by
+`BaseLayout.astro`). It wraps the site's own CSS with Tailwind 4 in cascade
+layers:
+
+| Layer | Source | Notes |
+| --- | --- | --- |
+| `theme` | Tailwind | Default theme values, with the colour palette replaced by the site's tokens |
+| `base` | `src/styles/global.css` | The reset, element styles and design tokens — unchanged |
+| `utilities` | Tailwind | Generated only for classes that appear in `src/` |
+
+Tailwind's preflight is **not** included: `global.css` already owns the reset,
+and preflight would change the rendered site. Because utilities sit in a layer
+above `base`, a utility on an element wins over a base rule.
+
+- The tokens are Tailwind colours via `@theme inline`, so `bg-bg`, `text-text`,
+  `text-muted`, `border-border`, `bg-accent-soft`, `rounded-site`,
+  `max-w-measure` exist and switch with the theme on their own (they resolve to
+  the CSS variables at paint time; no `dark:` prefix needed for a token colour).
+- `dark:` follows the theme toggle (`data-theme="dark"`), and falls back to the
+  OS preference when nothing is stored — the same rule as the token blocks in
+  `global.css`.
+- Tailwind runs as a Vite plugin and its output is part of the same external
+  stylesheet, so `build.inlineStylesheets: 'never'` and the CSP still hold;
+  `npm run check:inline` covers it.
+- Only `src/` is scanned for class names (`@source` in `tailwind.css`). The
+  layout wrapper class is `.wrap`: Tailwind has a `container` utility of its own
+  and the two would collide in the `utilities` layer.
+
 ## Deploying on Cloudflare Pages
 
 Hosting is set up separately. Settings for a Pages project connected to this repo:

@@ -19,7 +19,7 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 <BaseLayout title={post.data.title} description={post.data.summary}>
-  <div class="container">
+  <div class="wrap">
     <article class="section prose">
       <header class="article-header">
         <p><a href="/writing/">Writing</a></p>

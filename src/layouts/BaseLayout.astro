@@ -3,7 +3,9 @@
 // external file (build.inlineStylesheets = "never") and the theme script is
 // a static file in /public loaded with a src attribute.
 import '@fontsource-variable/figtree';
-import '../styles/global.css';
+// tailwind.css imports global.css into a cascade layer and adds Tailwind's
+// utilities above it; it is the one stylesheet entry.
+import '../styles/tailwind.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { site } from '../data/site';
