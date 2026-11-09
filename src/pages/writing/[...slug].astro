@@ -2,7 +2,6 @@
 import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import WorkWithMe from '../../components/WorkWithMe.astro';
 import { formatDate, getPublishedWriting, type WritingEntry } from '../../lib/writing';
 
 // Only published entries get a page. Drafts produce no route at all.
@@ -32,6 +31,5 @@ const { Content } = await render(post);
         <Content />
       </div>
     </article>
-    <WorkWithMe />
   </div>
 </BaseLayout>

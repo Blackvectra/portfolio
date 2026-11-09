@@ -7,16 +7,15 @@ interface Props {
 }
 
 const { project } = Astro.props;
-// The card shows the summary up to any placeholder; the full paragraph,
-// placeholders included, is on /projects/.
+// The home page shows one sentence per project; the full paragraph is on
+// /projects/, which the title links to. A placeholder, if one is ever
+// reintroduced, ends the lead before it.
 const placeholderAt = project.summary.indexOf('[');
-const lead = (placeholderAt > 0 ? project.summary.slice(0, placeholderAt) : project.summary).trim();
+const text = (placeholderAt > 0 ? project.summary.slice(0, placeholderAt) : project.summary).trim();
+const lead = (text.match(/^[^.!?]+[.!?]+(?=\s|$)/)?.[0] ?? text).trim();
 ---
 <article class="card">
   <StatusBadge status={project.status} />
-  <h3>{project.title}</h3>
+  <h3><a href={`/projects/#${project.id}`}>{project.title}</a></h3>
   <p>{lead}</p>
-  <a class="card__link" href={`/projects/#${project.id}`}>
-    Project details<span class="visually-hidden">: {project.title}</span>
-  </a>
 </article>

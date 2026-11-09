@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import MaybeLink from '../../components/MaybeLink.astro';
-import WorkWithMe from '../../components/WorkWithMe.astro';
 import { links, site } from '../../data/site';
+import { certificationsLine } from '../../data/certifications';
 
 const focusAreas = [
   {
@@ -36,21 +36,20 @@ const background = [
   },
   {
     label: 'Certifications',
-    text: 'CompTIA CySA+ (2026), CompTIA Security+ (2025), ISC2 Certified in Cybersecurity (2025), CompTIA A+ (2024).',
+    text: `${certificationsLine}.`,
   },
 ];
 ---
 <BaseLayout
   title="About"
-  description="About Matthew Levorson, security engineer and owner of NextlayerSec LLC, based in North Dakota."
+  description="About Matthew Levorson, security engineer based in North Dakota: identity, endpoint and email security on Microsoft 365."
 >
   <div class="wrap">
     <section class="section prose">
       <h1>About</h1>
       <p class="lede">
-        I'm {site.name}, a security engineer based in {site.location}. I own {site.business}, a
-        consulting practice focused on Microsoft 365 and Entra security assessments, enterprise email
-        security, and DMARC enforcement.
+        I'm {site.name}, a security engineer based in {site.location}. I work on Microsoft 365 and
+        Entra security, enterprise email security, and DMARC enforcement, and I write up what I build.
       </p>
       <h2>Background</h2>
       <ul>
@@ -79,7 +78,5 @@ const background = [
         }
       </ul>
     </section>
-
-    <WorkWithMe />
   </div>
 </BaseLayout>

@@ -57,6 +57,16 @@ Do not loosen the CSP to make something work. Move the code to an external file 
 
 ## Styling
 
+Editorial and monospace, deliberately not the look of the NextlayerSec
+business site. Serif for reading (Newsreader, optical-size axis, self-hosted
+from `@fontsource-variable/newsreader`), monospace for labels, dates, tags,
+navigation and code (IBM Plex Mono, `@fontsource/ibm-plex-mono`), one accent
+(oxblood in light, brick in dark), hairline rules instead of cards or fills,
+a 36rem reading measure. All tokens live at the top of `global.css` with the
+contrast ratios they were checked against; `--border` is decorative and
+`--border-strong` is the one used on control edges (3:1 or better on the
+background in both themes).
+
 `src/styles/tailwind.css` is the single stylesheet entry (imported by
 `BaseLayout.astro`). It wraps the site's own CSS with Tailwind 4 in cascade
 layers:
