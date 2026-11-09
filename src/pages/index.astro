@@ -79,17 +79,13 @@ const posts = (await getPublishedWriting()).slice(0, 3);
       </ul>
     </section>
 
-    <section class="home-section" aria-labelledby="writing-heading">
-      <div class="section-head">
-        <h2 id="writing-heading">Writing</h2>
-        <a href="/writing/">All writing</a>
-      </div>
-      {
-        posts.length === 0 ? (
-          <p class="empty-state">
-            Nothing published here yet.
-          </p>
-        ) : (
+    {
+      posts.length > 0 && (
+        <section class="home-section" aria-labelledby="writing-heading">
+          <div class="section-head">
+            <h2 id="writing-heading">Writing</h2>
+            <a href="/writing/">All writing</a>
+          </div>
           <ul class="post-list">
             {posts.map((post) => (
               <li>
@@ -103,8 +99,8 @@ const posts = (await getPublishedWriting()).slice(0, 3);
               </li>
             ))}
           </ul>
-        )
-      }
-    </section>
+        </section>
+      )
+    }
   </div>
 </BaseLayout>

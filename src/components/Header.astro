@@ -1,5 +1,10 @@
 ---
 import { nav, site } from '../data/site';
+import { getPublishedWriting } from '../lib/writing';
+
+// Writing stays out of the menu until there is something to read.
+const hasWriting = (await getPublishedWriting()).length > 0;
+const items = nav.filter((item) => item.href !== '/writing/' || hasWriting);
 
 const path = Astro.url.pathname;
 const isCurrent = (href: string) => path === href || path.startsWith(href);
@@ -10,7 +15,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(href);
     <nav class="site-nav" aria-label="Main">
       <ul>
         {
-          nav.map((item) => (
+          items.map((item) => (
             <li>
               <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
                 {item.label}

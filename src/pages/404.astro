@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPublishedWriting } from '../lib/writing';
+
+// The Writing link appears with the first published entry.
+const hasWriting = (await getPublishedWriting()).length > 0;
 ---
 <BaseLayout title="Page not found" description="The page you requested does not exist." noindex>
   <div class="wrap">
@@ -7,7 +11,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <h1>Page not found</h1>
       <p class="lede">That page does not exist or has moved.</p>
       <p>
-        Try the <a href="/">home page</a>, <a href="/projects/">projects</a>, or <a href="/writing/">writing</a>.
+        Try the <a href="/">home page</a> or <a href="/projects/">projects</a>{hasWriting && <>, or <a href="/writing/">writing</a></>}.
       </p>
     </section>
   </div>
