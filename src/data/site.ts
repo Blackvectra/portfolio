@@ -11,7 +11,7 @@ export const site = {
   business: 'NextLayerSec LLC',
   location: 'North Dakota',
   description:
-    'Matthew Levorson, security engineer. Microsoft 365 and Entra security assessments, enterprise email security, and DMARC enforcement.',
+    'Matthew Levorson, security engineer. Identity, endpoint, and email security on Microsoft 365: control rollouts, detection triage, and assessment tooling.',
 } as const;
 
 export const links = {

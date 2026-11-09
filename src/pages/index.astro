@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ExperienceRow from '../components/ExperienceRow.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { projects } from '../data/projects';
 import { certifications } from '../data/certifications';
+import { experience, role } from '../data/experience';
 import { site } from '../data/site';
 import { formatDate, getPublishedWriting } from '../lib/writing';
 
@@ -13,14 +15,32 @@ const posts = (await getPublishedWriting()).slice(0, 3);
     <section class="section section--intro" aria-labelledby="intro">
       <h1 id="intro">{site.name}</h1>
       <p class="lede">
-        Security engineer focused on Microsoft 365 and Entra security assessments, enterprise email
-        security, and DMARC enforcement.
+        Security engineer at a managed service provider, working across 35 Microsoft 365 client
+        tenants. I roll out identity, endpoint, and email security controls, investigate detections,
+        and build tooling to check what is actually enforced.
       </p>
-      <p class="prose muted">Projects, technical write-ups, and the certifications behind them.</p>
+      <p class="prose muted">Work experience, projects, and the certifications behind them.</p>
       <p class="intro-actions">
         <a class="button" href="/projects/">View projects</a>
         <a href="/about/#contact">Contact</a>
       </p>
+    </section>
+
+    <section class="home-section" aria-labelledby="experience-heading">
+      <div class="section-head">
+        <h2 id="experience-heading">Experience</h2>
+        <a href="/about/#experience-heading">Full background</a>
+      </div>
+      <p class="mono muted role-line">{role.title} &middot; {role.employer} &middot; {role.period}</p>
+      <ul class="card-grid">
+        {
+          experience.map((entry) => (
+            <li>
+              <ExperienceRow entry={entry} />
+            </li>
+          ))
+        }
+      </ul>
     </section>
 
     <section class="home-section" aria-labelledby="projects-heading">
@@ -33,6 +53,21 @@ const posts = (await getPublishedWriting()).slice(0, 3);
           projects.map((project) => (
             <li>
               <ProjectCard project={project} />
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="home-section" aria-labelledby="certs-heading">
+      <h2 id="certs-heading">Certifications</h2>
+      <ul class="cert-list">
+        {
+          certifications.map((cert) => (
+            <li>
+              <span class="cert-year">{cert.year ?? ''}</span>
+              <span class="cert-name">{cert.name}</span>
+              <span class="cert-issuer">{cert.issuer}</span>
             </li>
           ))
         }
@@ -65,21 +100,6 @@ const posts = (await getPublishedWriting()).slice(0, 3);
           </ul>
         )
       }
-    </section>
-
-    <section class="home-section" aria-labelledby="certs-heading">
-      <h2 id="certs-heading">Certifications</h2>
-      <ul class="cert-list">
-        {
-          certifications.map((cert) => (
-            <li>
-              <span class="cert-year">{cert.year ?? ''}</span>
-              <span class="cert-name">{cert.name}</span>
-              <span class="cert-issuer">{cert.issuer}</span>
-            </li>
-          ))
-        }
-      </ul>
     </section>
   </div>
 </BaseLayout>
