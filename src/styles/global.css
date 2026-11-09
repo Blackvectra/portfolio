@@ -1,5 +1,5 @@
-/* Minimal, dependency-free. No inline styles anywhere so the CSP in _headers
-   can stay at style-src 'self'. */
+/* Minimal, dependency-free. Emitted as a file (build.inlineStylesheets is
+   "never") so the CSP in public/_headers can stay at style-src 'self'. */
 :root {
   color-scheme: light dark;
   --bg: #ffffff;

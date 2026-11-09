@@ -1,30 +1,43 @@
 # mattlevorson.com
 
-Static portfolio site, served by a Cloudflare Worker using
+Portfolio site built with [Astro](https://astro.build) and served by a
+Cloudflare Worker using
 [Workers Static Assets](https://developers.cloudflare.com/workers/static-assets/).
-There is no Worker script: everything under `public/` is served as-is, with the
-response headers in `public/_headers` and the redirects in `public/_redirects`.
+There is no Worker script: `astro build` writes `dist/`, and the Worker serves
+it as-is with the response headers in `public/_headers` and the redirects in
+`public/_redirects` (Astro copies `public/` into `dist/` verbatim).
 
 ## Layout
 
 ```text
-wrangler.jsonc        Worker config: name, compatibility date, assets directory
-package.json          Pins the Wrangler version Workers Builds deploys with
+astro.config.mjs      Site URL, trailingSlash "never", build.format "file",
+                      inlineStylesheets "never" (required by the CSP, see below)
+wrangler.jsonc        Worker config: assets directory ./dist, 404 page, URL shape
+package.json          Pinned toolchain: astro, @astrojs/check, typescript, wrangler
+tsconfig.json         astro/tsconfigs/strict
+.npmrc                ignore-scripts=true — no dependency may run install scripts
+.nvmrc                Node version Workers Builds uses
+src/
+  layouts/Base.astro  <head>, canonical URL, footer; every page uses it
+  pages/index.astro   Front page
+  pages/404.astro     Served with a 404 status for any unknown path
+  styles/global.css   The only stylesheet
 public/
-  index.html          Front page
-  404.html            Served with a 404 status for any unknown path
-  styles.css          The only stylesheet (no inline styles — see CSP below)
   _headers            Security headers applied to every response
   _redirects          www -> apex
   robots.txt
+  favicon.svg
 ```
 
 ## Local
 
 ```bash
 npm install
-npm run dev        # http://localhost:8787 — serves public/ with headers and 404 handling
-npm run check      # validates wrangler.jsonc and the assets without deploying
+npm run dev        # Astro dev server with hot reload (no headers; see preview)
+npm run build      # -> dist/
+npm run preview    # wrangler dev over dist/: the real headers, 404 and URL handling
+npm run check      # astro check: types and template errors
+npm run verify     # build + wrangler deploy --dry-run: what Workers Builds will do
 ```
 
 `wrangler dev` runs locally and needs no Cloudflare login.
@@ -36,8 +49,8 @@ from GitHub Actions:
 
 1. Cloudflare dashboard → Workers & Pages → Create → **Workers** → *Import a
    repository* → `Blackvectra/portfolio`.
-2. Build settings: leave the build command **empty** (nothing to build), deploy
-   command `npx wrangler deploy` (the default). Wrangler reads `wrangler.jsonc`.
+2. Build command `npm run build`; deploy command `npx wrangler deploy` (the
+   default). Wrangler reads `wrangler.jsonc`.
 3. Production branch `main`. Every push to `main` deploys; every pull request
    gets a preview URL.
 
@@ -64,7 +77,7 @@ stay exactly as it is. The Worker never touches it.
 
 | Header | Value | Why |
 |---|---|---|
-| `Content-Security-Policy` | `default-src 'none'; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'` | Nothing loads from anywhere but this origin; no scripts at all. Adding JavaScript means adding `script-src 'self'` here, never `'unsafe-inline'`. |
+| `Content-Security-Policy` | `default-src 'none'; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'` | Nothing loads from anywhere but this origin and there is no JavaScript. Adding a script means adding `script-src 'self'` here, never `'unsafe-inline'`; `inlineStylesheets: "never"` in `astro.config.mjs` is what keeps styles out of `<style>` tags so `style-src 'self'` holds. |
 | `X-Content-Type-Options` | `nosniff` | No MIME sniffing |
 | `X-Frame-Options` | `DENY` | Belt and braces for `frame-ancestors` |
 | `Referrer-Policy` | `strict-origin-when-cross-origin` | Origin only on cross-site navigation |
@@ -75,6 +88,8 @@ stay exactly as it is. The Worker never touches it.
 
 ## Dependencies
 
-Wrangler is the only dependency and is pinned to an exact version in
-`package.json`. Dependabot (`.github/dependabot.yml`) proposes a bump weekly,
-seven days after each release.
+Every package is pinned to an exact version in `package.json`, chosen at least
+seven days after its release. Dependabot (`.github/dependabot.yml`) proposes
+bumps weekly on the same cooldown, grouped as `astro` and `tooling`.
+`.npmrc` sets `ignore-scripts=true` so no dependency runs code at install
+time, locally or in Workers Builds.

@@ -1,17 +1,21 @@
-// Cloudflare Worker that serves the portfolio as static assets.
-// No script: Workers Static Assets serves ./public directly, applying
-// public/_headers and public/_redirects. Workers Builds deploys this on every
-// push to main (see README.md).
+// Cloudflare Worker that serves the Astro build as static assets.
+// No script: Workers Static Assets serves ./dist (the output of `astro build`)
+// directly, applying the _headers and _redirects that Astro copies in from
+// public/. Workers Builds runs `npm run build` then `npx wrangler deploy` on
+// every push to main (see README.md).
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "portfolio",
   "compatibility_date": "2026-10-01",
   "assets": {
-    "directory": "./public",
-    // Serve public/404.html with a 404 status for any path that has no asset.
+    "directory": "./dist",
+    // Serve dist/404.html (src/pages/404.astro) with a 404 status for any
+    // path that has no asset.
     "not_found_handling": "404-page",
-    // /about -> /about/ (and /about/index.html) the way GitHub Pages did.
-    "html_handling": "auto-trailing-slash"
+    // Astro builds about.astro to about.html (build.format "file") and the
+    // site uses trailingSlash "never": /about serves it, /about/ redirects
+    // to /about.
+    "html_handling": "drop-trailing-slash"
   },
   "observability": {
     "enabled": true

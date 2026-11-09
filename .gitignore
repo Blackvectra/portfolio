@@ -1,4 +1,9 @@
+# build output
+dist/
+.astro/
+
+# tooling
 node_modules/
 .wrangler/
 .dev.vars
-dist/
+npm-debug.log*

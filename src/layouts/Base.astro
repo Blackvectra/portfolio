@@ -1,0 +1,40 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  /** Set on pages that should stay out of search results (404, thank-you). */
+  noindex?: boolean;
+}
+
+const { title, description, noindex = false } = Astro.props;
+// With build.format "file", Astro.url.pathname is the built file name
+// (/index.html, /about.html). The canonical URL is the served path, which is
+// "/" for the index and the extensionless path otherwise (trailingSlash
+// "never", html_handling "drop-trailing-slash" in wrangler.jsonc).
+const served = Astro.url.pathname.replace(/\/index\.html$/, "/").replace(/\.html$/, "");
+// Astro.site is the `site` value in astro.config.mjs.
+const canonical = new URL(served, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical.href} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <main>
+      <slot />
+    </main>
+    <footer>
+      <p>mattlevorson.com</p>
+    </footer>
+  </body>
+</html>
