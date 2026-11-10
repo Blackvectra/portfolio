@@ -12,24 +12,33 @@ const posts = (await getPublishedWriting()).slice(0, 3);
 ---
 <BaseLayout>
   <div class="wrap">
-    <section class="section section--intro" aria-labelledby="intro">
-      <p class="mono muted kicker">{site.role} &middot; Microsoft 365</p>
-      <h1 id="intro">{site.name}</h1>
-      <p class="lede">
-        Security engineer at a managed service provider, securing identity, endpoint, and email
-        across 35 Microsoft 365 client tenants. I roll out and tune the controls, investigate
-        detections, and build tooling that verifies what is actually enforced.
-      </p>
-      <div class="cert-line">
-        <span class="mono muted" id="cert-line-label">Certifications</span>
-        <ul class="tags" aria-labelledby="cert-line-label">
-          {certifications.map((cert) => <li>{cert.short}</li>)}
-        </ul>
+    <section class="section section--intro intro" aria-labelledby="intro">
+      <div class="intro__text">
+        <p class="mono muted kicker">{site.role} &middot; Microsoft 365</p>
+        <h1 id="intro">{site.name}</h1>
+        <p class="lede">
+          Security engineer at a managed service provider, securing identity, endpoint, and email
+          across 35 Microsoft 365 client tenants. I roll out and tune the controls, investigate
+          detections, and build tooling that verifies what is actually enforced.
+        </p>
+        <div class="cert-line">
+          <span class="mono muted" id="cert-line-label">Certifications</span>
+          <ul class="tags" aria-labelledby="cert-line-label">
+            {certifications.map((cert) => <li>{cert.short}</li>)}
+          </ul>
+        </div>
+        <p class="intro-actions">
+          <a class="button" href="/projects/">View projects</a>
+          <a href={links.linkedin}>Connect on LinkedIn<span aria-hidden="true"> ↗</span></a>
+        </p>
       </div>
-      <p class="intro-actions">
-        <a class="button" href="/projects/">View projects</a>
-        <a href={links.linkedin}>Connect on LinkedIn<span aria-hidden="true"> ↗</span></a>
-      </p>
+      {/* After the name in source order, so a screen reader hears the name
+          once before the photo; CSS puts the photo first on phones. Served
+          from the site itself (img-src 'self'); EXIF-free, 320x320. */}
+      <picture class="portrait">
+        <source srcset="/portrait.webp" type="image/webp" />
+        <img src="/portrait.jpg" alt="Matthew Levorson" width="320" height="320" decoding="async" />
+      </picture>
     </section>
 
     <section class="home-section" aria-labelledby="experience-heading">

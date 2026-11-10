@@ -883,6 +883,37 @@ code {
   }
 }
 
+/* Home intro: the portrait sits above the text on phones and beside it on
+   wider screens. A hairline frame, like the rest of the site; no circle. */
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+.portrait {
+  order: -1;
+  margin: 0 0 1.25rem;
+}
+.portrait img {
+  display: block;
+  width: 5.5rem;
+  height: auto;
+  border: 1px solid var(--border);
+}
+@media (min-width: 48rem) {
+  .intro {
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 3rem;
+    align-items: start;
+  }
+  .portrait {
+    order: 0;
+    margin: 0.35rem 0 0;
+  }
+  .portrait img {
+    width: 11rem;
+  }
+}
+
 /* The role line above the home headline. */
 .kicker {
   margin: 0 0 0.6rem;
