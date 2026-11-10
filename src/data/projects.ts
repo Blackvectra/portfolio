@@ -79,16 +79,17 @@ export const projects: Project[] = [
     title: 'Microsoft 365 and Entra security assessment tool',
     category: 'Microsoft 365 · Assessment tooling',
     summary:
-      'A read-only assessment tool that collects tenant configuration through Microsoft Graph and reports each check as pass, fail, not applicable, not assessed, or inconclusive. "Not assessed" and "inconclusive" are kept separate from "pass" so a permission gap or a failed query is reported as such instead of as a clean result. PowerShell 7, read-only against Microsoft Graph and Exchange Online. Controls are mapped to CIS Microsoft 365 Foundations v7, CISA SCuBA and NIST SP 800-53, with Conditional Access and Intune checklists aligned to Maester, and the output is a client-facing report. Public and under active development.',
+      'A read-only assessment tool that collects tenant configuration through Microsoft Graph and reports each check as pass, fail, not applicable, not assessed, or inconclusive. "Not assessed" and "inconclusive" are kept separate from "pass" so a permission gap or a failed query is reported as such instead of as a clean result. PowerShell 7, read-only against Microsoft Graph and Exchange Online. Controls are mapped to NIST SP 800-53, CIS, CISA SCuBA, CMMC, and the HIPAA Security Rule, with Conditional Access and Intune checklists aligned to Maester, and the output is a client-facing report. Public and under active development.',
     problem:
       'An assessment is only useful if its findings are accurate. The tool has to tell a confirmed gap apart from a collection error or a control nobody assessed, and a missing license should not be reported as a failing control.',
-    role: "Published as TenantPosture. I design, write, and test it, and I'm working through its false findings myself.",
+    role: "Published as TenantPosture; it is the assessment tool I develop and maintain at work, under a new name. I design, write, and test it, and I'm working through its false findings myself.",
     deliverable:
       'A read-scope assessment run over 253 controls, each with framework references, reported with distinct result states and gated by a Pester test suite.',
     built: [
       'Collectors for Microsoft Graph, Exchange Online, Purview, Teams, SharePoint, Intune device compliance, and DNS, using read scopes for assessment runs',
       'Distinct result states, including not assessed and error, so a failed collection is never reported as a pass',
-      'Framework references on each of 253 controls, as mapping context rather than a compliance verdict',
+      "Framework references on each of 253 controls, as mapping context rather than a compliance verdict: NIST SP 800-53 Rev 5 and CMMC 2.0 Level 2 on every control, the HIPAA Security Rule on 242, CIS Controls v8.1 on 229, CIS Microsoft 365 Foundations v7.0.0 on 119 where the check matches the benchmark's audit, and CISA SCuBA on 90",
+      'Framework reports from the same run: a HIPAA Security Rule readiness report covering its 63 standards and implementation specifications, a system security plan against all 110 NIST SP 800-171 Rev 2 requirements for CMMC Level 2, and NIST SP 800-53 results by control family',
       "License-aware scoring, so controls the tenant isn't licensed for are separated from the score instead of counted as gaps",
       "Manual-review entries for controls that can't be checked automatically, with statuses such as not implemented, compensating control, and risk accepted",
     ],
@@ -96,9 +97,12 @@ export const projects: Project[] = [
       'A Pester suite of about 3,700 tests across 145 files, run as one gate; the repository records CI as not executed on recent runs because of a GitHub Actions billing restriction',
       "An accuracy review documented in the repository found about 31 controls returning results the collected data didn't support: 13 were fixed to read real data, 16 now report not assessed, 2 were null-guarded",
       'The root cause of a collector error that reported zero Global Admins on a tenant that had several is documented and fixed',
+      'A framework-accuracy suite checks every CISA SCuBA citation against the ScubaGear policy list and every CIS Controls v8.1 citation against the safeguard list, plus CMMC domains and levels, so a wrong citation fails the pull request',
+      "A HIPAA citation review removed or replaced 17 citations that did not describe what the control's check examines",
     ],
     limitations: [
       'Framework references are mapping context. The tool does not certify compliance or evaluate a whole framework automatically',
+      'The HIPAA readiness report is not a HIPAA risk analysis or a compliance determination. It covers what Microsoft 365 configuration can show and lists the documentation the client still owns',
       'No live validation against a seeded test tenant yet, as recorded in the repository',
       'Separate, clearly labeled baseline scripts in the same repository do change tenant configuration; they are not part of an assessment run',
     ],

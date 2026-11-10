@@ -2,7 +2,9 @@
 //
 // These describe work done in employment, at the level of detail of a
 // resume: no client names, no tenant identifiers, no internal details.
-// Personal projects live in projects.ts; keep the two apart.
+// Personal projects live in projects.ts; keep the two apart. Where the work
+// is also published as a project, `project` links the two instead of
+// repeating the project detail here.
 
 export const role = {
   title: 'Security Engineer I',
@@ -22,6 +24,8 @@ export interface ExperienceEntry {
   /** Detail shown on About only. */
   points: string[];
   tools: string[];
+  /** The published project this work became, if any. */
+  project?: { label: string; href: string };
 }
 
 export const experience: ExperienceEntry[] = [
@@ -78,13 +82,14 @@ export const experience: ExperienceEntry[] = [
   {
     id: 'assessment-tooling',
     area: 'Assessment',
-    title: 'NIST-aligned assessment tooling',
+    title: 'Security assessment tooling',
     summary:
-      'Develop and maintain a NIST-aligned security assessment tool used to evaluate client environments.',
+      'Develop and maintain a read-only Microsoft 365 assessment tool that evaluates client environments against NIST SP 800-53, CIS, CISA SCuBA, CMMC, and the HIPAA Security Rule.',
     points: [
       'Identifies control gaps and documents evidence limitations and exceptions',
       'Prioritizes remediation recommendations from the findings',
     ],
-    tools: ['PowerShell', 'Microsoft Graph', 'NIST'],
+    tools: ['PowerShell', 'Microsoft Graph', 'NIST', 'CIS', 'HIPAA'],
+    project: { label: 'Published as TenantPosture', href: '/projects/#m365-entra-assessment-tool' },
   },
 ];
