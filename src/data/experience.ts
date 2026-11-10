@@ -56,9 +56,9 @@ export const experience: ExperienceEntry[] = [
   {
     id: 'identity-hardening',
     area: 'Identity',
-    title: 'Identity and access security across 35 tenants',
+    title: 'Identity and access security across 35 Microsoft 365 tenants',
     summary:
-      'Administer Microsoft 365 and Entra ID security across 35 client tenants, from sign-in policy to privileged access.',
+      'Run Microsoft 365 and Entra ID security for 35 client tenants, from sign-in policy and Conditional Access to privileged access.',
     points: [
       'Conditional Access, MFA, and passwordless sign-in with Windows Hello for Business',
       'Privileged Identity Management for just-in-time admin elevation',
