@@ -1,6 +1,7 @@
 ---
 // One experience entry as a ruled row: area in the badge column, then the
-// title, what I did, and the tools. `detailed` adds the bullet points and
+// title, what I did, the tools, and a link to the published project when the
+// work became one. `detailed` adds the bullet points and
 // makes the row an anchor target (About); otherwise the title links to it.
 import type { ExperienceEntry } from '../data/experience';
 
@@ -25,4 +26,13 @@ const { entry, detailed = false } = Astro.props;
   <ul class="tags" aria-label="Tools">
     {entry.tools.map((tool) => <li>{tool}</li>)}
   </ul>
+  {
+    entry.project && (
+      <p class="card__links">
+        <a href={entry.project.href}>
+          {entry.project.label}<span aria-hidden="true"> →</span>
+        </a>
+      </p>
+    )
+  }
 </article>
