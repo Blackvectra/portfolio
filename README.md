@@ -43,7 +43,8 @@ npm run preview   # serves dist/ locally
 - **Writing**: Markdown files in `src/content/writing/` with frontmatter `title`, `date`, `summary`, `status` (`draft` or `published`). Drafts get no page, no index entry, and no sitemap entry. `case-study-template.md` is the case study template; copy it to start a new one.
 - The Writing menu item, the home page's Writing section, and the sitemap entry appear once the first entry is `published`; until then the Writing index is `noindex`.
 - **Experience**: `src/data/experience.ts`. Work done in employment, at resume-level detail with no client names. Home shows one row per entry; About shows the full entries.
-- **Links and site facts**: `src/data/site.ts` (LinkedIn, GitHub). **Certifications**: `src/data/certifications.ts`; the year is optional and left blank until known.
+- **Portrait**: `public/portrait.webp` with a `public/portrait.jpg` fallback, 320x320, cropped from the NextLayerSec site's portrait. Re-encode any replacement so it carries no EXIF, GPS, or XMP data, and keep the file on this domain (`img-src 'self'`).
+- **Links and site facts**: `src/data/site.ts` (LinkedIn, GitHub). **Certifications**: `src/data/certifications.ts`; Home shows the short names under the headline, About the full line with years. The year is optional and left out until known.
 
 ## Security headers and CSP
 

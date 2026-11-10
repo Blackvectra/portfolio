@@ -1,5 +1,5 @@
-// Certifications held. Source of truth for the home page list and the About
-// page line, so the two never disagree. Newest first; entries without a
+// Certifications held. Source of truth for the line under the home headline
+// and the About page line, so the two never disagree. Newest first; entries without a
 // known year sort last. Only completed certifications belong here; anything
 // in progress stays off the site.
 
@@ -8,7 +8,7 @@ export interface Certification {
   issuer: string;
   /** Short form for the line under the home headline, e.g. "CySA+". */
   short: string;
-  /** Year earned. Leave out until known; the year column stays blank. */
+  /** Year earned. Leave out until known; the About line then omits it. */
   year?: number;
 }
 
