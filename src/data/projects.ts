@@ -109,6 +109,7 @@ export const projects: Project[] = [
     status: 'published',
     link: 'https://github.com/Blackvectra/TenantPosture',
     linkLabel: 'View the project',
+    extraLinks: [{ label: 'Read the accuracy review', href: '/writing/tenantposture-accuracy-review/' }],
     topics: ['Microsoft Graph', 'Entra ID', 'Microsoft 365', 'Intune', 'Read-only'],
   },
   {

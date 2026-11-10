@@ -5,7 +5,7 @@ import ProjectCard from '../components/ProjectCard.astro';
 import { projects } from '../data/projects';
 import { certifications } from '../data/certifications';
 import { experience, role } from '../data/experience';
-import { site } from '../data/site';
+import { links, site } from '../data/site';
 import { formatDate, getPublishedWriting } from '../lib/writing';
 
 const posts = (await getPublishedWriting()).slice(0, 3);
@@ -13,6 +13,7 @@ const posts = (await getPublishedWriting()).slice(0, 3);
 <BaseLayout>
   <div class="wrap">
     <section class="section section--intro" aria-labelledby="intro">
+      <p class="mono muted kicker">{site.role} &middot; Microsoft 365</p>
       <h1 id="intro">{site.name}</h1>
       <p class="lede">
         Security engineer at a managed service provider, securing identity, endpoint, and email
@@ -27,7 +28,7 @@ const posts = (await getPublishedWriting()).slice(0, 3);
       </div>
       <p class="intro-actions">
         <a class="button" href="/projects/">View projects</a>
-        <a href="/about/#contact">Contact</a>
+        <a href={links.linkedin}>Connect on LinkedIn<span aria-hidden="true"> ↗</span></a>
       </p>
     </section>
 
@@ -58,21 +59,6 @@ const posts = (await getPublishedWriting()).slice(0, 3);
           projects.map((project) => (
             <li>
               <ProjectCard project={project} />
-            </li>
-          ))
-        }
-      </ul>
-    </section>
-
-    <section class="home-section" aria-labelledby="certs-heading">
-      <h2 id="certs-heading">Certifications</h2>
-      <ul class="cert-list">
-        {
-          certifications.map((cert) => (
-            <li>
-              <span class="cert-year">{cert.year ?? ''}</span>
-              <span class="cert-name">{cert.name}</span>
-              <span class="cert-issuer">{cert.issuer}</span>
             </li>
           ))
         }

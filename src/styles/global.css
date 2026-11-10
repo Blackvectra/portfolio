@@ -535,7 +535,9 @@ code {
   color: var(--text-muted);
 }
 
-.tags li + li::before {
+/* The separator trails each item, so a wrapped line ends with one instead of
+   the next line starting with one. */
+.tags li:not(:last-child)::after {
   content: '\00a0\00b7\00a0';
 }
 
@@ -594,36 +596,6 @@ code {
 .post-list h3 a:hover {
   color: var(--accent);
   text-decoration: underline;
-}
-
-/* Certifications: year, name, issuer on one ruled row. */
-.cert-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-top: 1px solid var(--border);
-}
-
-.cert-list li {
-  display: grid;
-  grid-template-columns: 4.5rem minmax(0, 1fr) auto;
-  gap: 0 1.5rem;
-  align-items: baseline;
-  padding: 0.85rem 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.cert-year,
-.cert-issuer {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.cert-name {
-  font-size: 1.1rem;
 }
 
 /* Footer: mono, one hairline above. */
@@ -909,6 +881,12 @@ code {
   :target {
     scroll-margin-top: 7.5rem;
   }
+}
+
+/* The role line above the home headline. */
+.kicker {
+  margin: 0 0 0.6rem;
+  text-transform: uppercase;
 }
 
 /* Certification names under the home headline: a mono label, then the names. */
