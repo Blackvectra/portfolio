@@ -7,6 +7,7 @@ const posts = await getPublishedWriting();
 <BaseLayout
   title="Writing"
   description="Technical write-ups and case studies by Matthew Levorson on Microsoft 365, Entra, and email security."
+  noindex={posts.length === 0}
 >
   <div class="wrap">
     <section class="section">

@@ -1,7 +1,8 @@
 ---
 // Home page card. Built to be skimmed: status and category, the title, one
-// sentence on what it is, the problem, what I delivered, the topics, and a
-// clear destination. The full entry is on /projects/, which the title links to.
+// sentence on what it is, the topics, and a clear destination. The problem,
+// my role, what I implemented, and validation are on /projects/, which the
+// title links to.
 import StatusBadge from './StatusBadge.astro';
 import { isLink } from '../data/site';
 import type { Project } from '../data/projects';
@@ -24,16 +25,6 @@ const isSource = /^https:\/\/github\.com\//.test(project.link);
   </p>
   <h3><a href={`/projects/#${project.id}`}>{project.title}</a></h3>
   <p>{lead}</p>
-  <dl class="card__facts">
-    <div>
-      <dt>Problem</dt>
-      <dd>{project.problem}</dd>
-    </div>
-    <div>
-      <dt>I built</dt>
-      <dd>{project.deliverable}</dd>
-    </div>
-  </dl>
   <ul class="tags" aria-label="Topics">
     {project.topics.map((topic) => <li>{topic}</li>)}
   </ul>

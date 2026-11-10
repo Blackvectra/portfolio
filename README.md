@@ -41,6 +41,7 @@ npm run preview   # serves dist/ locally
 
 - **Projects**: `src/data/projects.ts`. Each entry has a category, summary, problem, role, one-line deliverable, what was built, validation performed, limitations, a status (`planned`, `in-progress`, `published`), a link, and optional extra links. Home shows a scannable card per project; `/projects/` shows the full entry. A link that is not a URL or internal path renders as visible placeholder text.
 - **Writing**: Markdown files in `src/content/writing/` with frontmatter `title`, `date`, `summary`, `status` (`draft` or `published`). Drafts get no page, no index entry, and no sitemap entry. `case-study-template.md` is the case study template; copy it to start a new one.
+- The Writing menu item, the home page's Writing section, and the sitemap entry appear once the first entry is `published`; until then the Writing index is `noindex`.
 - **Experience**: `src/data/experience.ts`. Work done in employment, at resume-level detail with no client names. Home shows one row per entry; About shows the full entries.
 - **Links and site facts**: `src/data/site.ts` (LinkedIn, GitHub). **Certifications**: `src/data/certifications.ts`; the year is optional and left blank until known.
 

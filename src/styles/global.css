@@ -910,3 +910,17 @@ code {
     scroll-margin-top: 7.5rem;
   }
 }
+
+/* Certification names under the home headline: a mono label, then the names. */
+.cert-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 1rem;
+  margin: 1.25rem 0 0;
+  max-width: var(--measure);
+}
+.cert-line .tags {
+  margin: 0;
+  color: var(--text);
+}
