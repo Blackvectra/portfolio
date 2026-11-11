@@ -17,7 +17,11 @@ interface Props {
 const { post } = Astro.props;
 const { Content } = await render(post);
 ---
-<BaseLayout title={post.data.title} description={post.data.summary}>
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description ?? post.data.summary}
+  published={post.data.date}
+>
   <div class="wrap">
     <article class="section prose">
       <header class="article-header">

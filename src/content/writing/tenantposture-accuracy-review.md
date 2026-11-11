@@ -2,6 +2,7 @@
 title: "Auditing my own assessment tool for false findings"
 date: 2026-11-10
 summary: "TenantPosture once reported zero Global Administrators on a tenant that had several. Tracing that one wrong answer turned into a review of every collector, evaluator, and framework citation in the tool, and a rule I now build by: an empty result is not a clean one."
+description: "How one wrong answer, zero Global Administrators on a tenant that had several, led to an audit of every check in my Microsoft 365 assessment tool."
 status: published
 ---
 

@@ -33,7 +33,7 @@ npm run preview   # serves dist/ locally
 | Command | What it does | Runs in CI |
 | --- | --- | --- |
 | `npm run check` | `astro sync`, then `tsc --noEmit --runExternalCode`: TypeScript 7.1 type-checks `.ts` and `.astro` files through `@astrojs/ts-content-mapper` (registered in `tsconfig.json`). Both are pre-release (TypeScript beta, mapper 0.x); `astro check` does not support TypeScript 7. `--runExternalCode` lets the mapper run during compilation. | Yes |
-| `npm run check:inline` | Fails if `dist/` HTML has inline scripts, `<style>` blocks, `style` attributes, or event-handler attributes. Run after `npm run build`. | Yes |
+| `npm run check:inline` | Fails if `dist/` HTML has inline scripts, `<style>` blocks, `style` attributes, or event-handler attributes. JSON-LD data blocks are allowed and must be valid JSON. Run after `npm run build`. | Yes |
 | `npm audit --audit-level=high` | Fails on high or critical advisories | Yes |
 | `npm run check:placeholders` | Pre-launch gate. Fails if any `PLACEHOLDER` text remains in `src/` or `public/`. Draft writing entries are skipped and listed. | No |
 
@@ -44,6 +44,7 @@ npm run preview   # serves dist/ locally
 - The Writing menu item, the home page's Writing section, and the sitemap entry appear once the first entry is `published`; until then the Writing index is `noindex`.
 - **Experience**: `src/data/experience.ts`. Work done in employment, at resume-level detail with no client names. Home shows one row per entry; About shows the full entries.
 - **Portrait**: `public/portrait.webp` with a `public/portrait.jpg` fallback, 320x320, cropped from the NextLayerSec site's portrait. Re-encode any replacement so it carries no EXIF, GPS, or XMP data, and keep the file on this domain (`img-src 'self'`).
+- **Search and sharing**: `BaseLayout.astro` adds the share image (`public/og.png`, 1200x630), Open Graph and Twitter card tags, and schema.org JSON-LD: `Person` on Home and About, `Article` on writing entries. A writing entry may set `description` (160 characters at most) for its meta description; otherwise the summary is used. The sitemap carries `lastmod` for writing entries only.
 - **Links and site facts**: `src/data/site.ts` (LinkedIn, GitHub). **Certifications**: `src/data/certifications.ts`, shown on their own page (`/certifications/`, in the menu), newest first, without years.
 
 ## Security headers and CSP
