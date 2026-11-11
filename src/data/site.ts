@@ -8,20 +8,16 @@
 export const site = {
   name: 'Matthew Levorson',
   role: 'Security engineer',
-  business: 'NextlayerSec LLC',
+  business: 'NextLayerSec LLC',
   location: 'North Dakota',
   description:
-    'Matthew Levorson, security engineer. Microsoft 365 and Entra security assessments, enterprise email security, and DMARC enforcement.',
+    'Matthew Levorson, security engineer. Identity, endpoint, and email security on Microsoft 365: control rollouts, detection triage, and assessment tooling.',
 } as const;
 
 export const links = {
-  /** Business site. Every "Work with me" call to action points here. */
+  /** Business site; linked once, in the footer. */
   nextlayersec: 'https://nextlayersec.io/',
-  /** The same Bookings link the NextlayerSec site's "Book a call" uses. */
-  booking:
-    'https://outlook.office.com/bookwithme/user/c9954428b8c34e5ea76d24d6fbc08696@nextlayersec.io/meetingtype/F1HOsBpnVUav5mLhdR8NXA2?anonymous&ep=mlink',
-  /** NextlayerSec company page. Swap for a personal profile URL if preferred. */
-  linkedin: 'https://linkedin.com/company/nextlayersec',
+  linkedin: 'https://www.linkedin.com/in/matthew-l-116776227',
   github: 'https://github.com/Blackvectra',
 } as const;
 

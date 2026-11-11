@@ -3,33 +3,76 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import MaybeLink from '../../components/MaybeLink.astro';
 import StatusBadge from '../../components/StatusBadge.astro';
 import Summary from '../../components/Summary.astro';
-import WorkWithMe from '../../components/WorkWithMe.astro';
 import { projects } from '../../data/projects';
+
+const statusNote = {
+  planned: 'Planned. The entry describes intent, not results.',
+  'in-progress': 'In progress. Open work is listed below.',
+  published: 'Released.',
+} as const;
 ---
 <BaseLayout
   title="Projects"
-  description="Projects by Matthew Levorson: email security on a self-managed domain, a read-only Microsoft 365 and Entra assessment tool, and a DMARC enforcement methodology."
+  description="Projects by Matthew Levorson: email security on a self-managed domain, read-only Microsoft 365 and Entra assessment tooling, and a DMARC enforcement methodology."
 >
   <div class="wrap">
     <section class="section">
       <h1>Projects</h1>
       <p class="lede">
-        Work I build and document in the open. Each entry shows its current status and links to the
-        full write-up or code when it exists.
+        Work I build and document in the open. Each entry covers the problem, my role, what I
+        implemented, what I actually validated, and what it does not do, with a link to the code or
+        notes.
       </p>
       <ul class="entry-list">
         {
           projects.map((project) => (
             <li>
               <article class="entry" id={project.id} aria-labelledby={`${project.id}-title`}>
+                <p class="mono muted entry__category">{project.category}</p>
                 <h2 id={`${project.id}-title`}>{project.title}</h2>
                 <ul class="tags" aria-label="Topics">
                   {project.topics.map((topic) => <li>{topic}</li>)}
                 </ul>
                 <Summary text={project.summary} />
+
+                <dl class="entry__facts">
+                  <div>
+                    <dt>Problem</dt>
+                    <dd><p>{project.problem}</p></dd>
+                  </div>
+                  <div>
+                    <dt>My role</dt>
+                    <dd><p>{project.role}</p></dd>
+                  </div>
+                  <div>
+                    <dt>What I implemented</dt>
+                    <dd>
+                      <ul>{project.built.map((item) => <li>{item}</li>)}</ul>
+                    </dd>
+                  </div>
+                  {project.validation.length > 0 && (
+                    <div>
+                      <dt>Validation performed</dt>
+                      <dd>
+                        <ul>{project.validation.map((item) => <li>{item}</li>)}</ul>
+                      </dd>
+                    </div>
+                  )}
+                  <div>
+                    <dt>Limitations and status</dt>
+                    <dd>
+                      <p>{statusNote[project.status]}</p>
+                      {project.limitations.length > 0 && (
+                        <ul>{project.limitations.map((item) => <li>{item}</li>)}</ul>
+                      )}
+                    </dd>
+                  </div>
+                </dl>
+
                 <div class="entry__meta">
                   <StatusBadge status={project.status} />
                   <MaybeLink href={project.link}>{project.linkLabel}</MaybeLink>
+                  {project.extraLinks?.map((l) => <a href={l.href}>{l.label}</a>)}
                 </div>
               </article>
             </li>
@@ -37,6 +80,5 @@ import { projects } from '../../data/projects';
         }
       </ul>
     </section>
-    <WorkWithMe />
   </div>
 </BaseLayout>

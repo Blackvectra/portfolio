@@ -1,25 +1,61 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ExperienceRow from '../components/ExperienceRow.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import WorkWithMe from '../components/WorkWithMe.astro';
 import { projects } from '../data/projects';
-import { site } from '../data/site';
+import { experience, role } from '../data/experience';
+import { links, site } from '../data/site';
+import { formatDate, getPublishedWriting } from '../lib/writing';
+
+const posts = (await getPublishedWriting()).slice(0, 3);
 ---
 <BaseLayout>
   <div class="wrap">
-    <section class="section section--intro" aria-labelledby="intro">
-      <h1 id="intro">{site.name}</h1>
-      <p class="lede">
-        Security engineer focused on Microsoft 365 and Entra security assessments, enterprise email
-        security, and DMARC enforcement.
-      </p>
-      <p class="prose muted">
-        This site holds my projects and technical write-ups. Consulting work runs through {site.business}.
-      </p>
+    <section class="section section--intro intro" aria-labelledby="intro">
+      <div class="intro__text">
+        <p class="mono muted kicker">{site.role} &middot; Microsoft 365</p>
+        <h1 id="intro">{site.name}</h1>
+        <p class="lede">
+          Security engineer at a managed service provider, securing identity, endpoint, and email
+          across 35 Microsoft 365 client tenants. I roll out and tune the controls, investigate
+          detections, and build tooling that verifies what is actually enforced.
+        </p>
+        <p class="intro-actions">
+          <a class="button" href="/projects/">View projects</a>
+          <a href={links.linkedin}>Connect on LinkedIn<span aria-hidden="true"> ↗</span></a>
+        </p>
+      </div>
+      {/* After the name in source order, so a screen reader hears the name
+          once before the photo; CSS puts the photo first on phones. Served
+          from the site itself (img-src 'self'); EXIF-free, 320x320. */}
+      <picture class="portrait">
+        <source srcset="/portrait.webp" type="image/webp" />
+        <img src="/portrait.jpg" alt="Matthew Levorson" width="320" height="320" decoding="async" />
+      </picture>
     </section>
 
-    <section aria-labelledby="projects-heading">
-      <h2 id="projects-heading">Projects</h2>
+    <section class="home-section" aria-labelledby="experience-heading">
+      <div class="section-head">
+        <h2 id="experience-heading">Experience</h2>
+        <a href="/about/#experience-heading">Full background</a>
+      </div>
+      <p class="mono muted role-line">{role.title} &middot; {role.employer} &middot; {role.period}</p>
+      <ul class="card-grid">
+        {
+          experience.map((entry) => (
+            <li>
+              <ExperienceRow entry={entry} />
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="home-section" aria-labelledby="projects-heading">
+      <div class="section-head">
+        <h2 id="projects-heading">Projects</h2>
+        <a href="/projects/">All projects</a>
+      </div>
       <ul class="card-grid">
         {
           projects.map((project) => (
@@ -29,9 +65,30 @@ import { site } from '../data/site';
           ))
         }
       </ul>
-      <p class="section--tight"><a href="/projects/">All projects</a> &middot; <a href="/writing/">Writing</a></p>
     </section>
 
-    <WorkWithMe />
+    {
+      posts.length > 0 && (
+        <section class="home-section" aria-labelledby="writing-heading">
+          <div class="section-head">
+            <h2 id="writing-heading">Writing</h2>
+            <a href="/writing/">All writing</a>
+          </div>
+          <ul class="post-list">
+            {posts.map((post) => (
+              <li>
+                <article>
+                  <time datetime={post.data.date.toISOString().slice(0, 10)}>{formatDate(post.data.date)}</time>
+                  <h3>
+                    <a href={`/writing/${post.id}/`}>{post.data.title}</a>
+                  </h3>
+                  <p class="muted">{post.data.summary}</p>
+                </article>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
   </div>
 </BaseLayout>

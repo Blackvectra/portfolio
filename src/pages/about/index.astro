@@ -1,56 +1,79 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ExperienceRow from '../../components/ExperienceRow.astro';
 import MaybeLink from '../../components/MaybeLink.astro';
-import WorkWithMe from '../../components/WorkWithMe.astro';
 import { links, site } from '../../data/site';
+import { certifications } from '../../data/certifications';
+import { experience, role } from '../../data/experience';
 
+// Each focus area is split into scope and standards, tooling and method, and
+// the deliverable, so a reader can find the part they care about, and links
+// to the projects that back it.
 const focusAreas = [
   {
     title: 'Identity',
-    text: 'Microsoft Entra ID and Microsoft 365 tenant security, reviewed through read-only assessment.',
-    detail:
-      'Conditional Access and MFA posture, checked with read-only Microsoft Graph tooling: which users are still on SMS or voice ahead of Microsoft retiring both, whether the passkey method they are being moved to is actually enabled and in scope for them, and where a policy exists on paper but is not enforced.',
+    scope:
+      'Microsoft Entra ID and Microsoft 365 tenant security: Conditional Access and MFA posture, and where a policy exists on paper but is not enforced.',
+    tooling: 'Read-only Microsoft Graph tooling in PowerShell 7, with Pester test gates.',
+    deliverable:
+      'Tenant assessment findings mapped to NIST SP 800-53, CIS, CISA SCuBA, CMMC, and the HIPAA Security Rule, including which users are still on SMS or voice ahead of Microsoft retiring both and where a policy exists on paper but is not enforced.',
+    projects: [{ label: 'Assessment tool', href: '/projects/#m365-entra-assessment-tool' }],
   },
   {
     title: 'Endpoint',
-    text: 'Microsoft Intune and Defender for Endpoint on Windows 11.',
-    detail:
-      'Settings Catalog baselines curated from CIS, the CISA Secure Configuration Baseline and the HIPAA Security Rule, Attack Surface Reduction rule sets tuned to the client (healthcare EHR, law firm, AVD), and compliance, LAPS and antivirus checks read the way Maester reads them, with a dry run before anything is applied.',
+    scope:
+      'Microsoft Intune and Defender for Endpoint on Windows 11, with baselines curated from CIS, the CISA Secure Configuration Baseline, and the HIPAA Security Rule.',
+    tooling:
+      'Settings Catalog baselines, Attack Surface Reduction rule sets tuned to the client (healthcare EHR, law firm, AVD), and compliance, LAPS, and antivirus checks read the way Maester reads them.',
+    deliverable:
+      'Baselines applied with a dry run before anything changes, and device-compliance findings inside the tenant assessment.',
+    projects: [{ label: 'Assessment tool', href: '/projects/#m365-entra-assessment-tool' }],
   },
   {
     title: 'Email Security',
-    text: 'SPF, DKIM, DMARC, MTA-STS, and DANE, with a focus on getting domains to DMARC enforcement.',
-    detail:
-      'Deployed end to end on domains I run: DMARC at p=reject with strict alignment, MTA-STS in enforce mode with TLS-RPT, and DNSSEC with Exchange Online’s DNSSEC-aware MX endpoint, then written up as a repeatable framework with the DNS records, the PowerShell, and the validation steps.',
+    scope:
+      'SPF, DKIM, DMARC, MTA-STS, TLS-RPT, DNSSEC, and DANE on Exchange Online domains, with a focus on getting domains to DMARC enforcement.',
+    tooling:
+      'Exchange Online PowerShell, DNS record templates, MTA-STS policy hosting, and DMARC aggregate report review.',
+    deliverable:
+      "Deployed end to end on domains I run: DMARC at p=reject with strict alignment, MTA-STS in enforce mode with TLS-RPT, and DNSSEC with Exchange Online's DNSSEC-aware MX endpoint, written up as a repeatable framework with the DNS records, the PowerShell, and the validation steps.",
+    projects: [
+      { label: 'Email security build', href: '/projects/#email-security-build' },
+      { label: 'DMARC methodology', href: '/projects/#dmarc-enforcement-methodology' },
+    ],
   },
 ];
 
 const background = [
   {
     label: 'Current role',
-    text: 'Security engineer at NRG Technology Services, a managed service provider: threat intelligence, incident response, endpoint security, and Microsoft 365 and Entra ID administration across client tenants.',
+    text: `${role.title} at ${role.employer}, a ${role.employerKind}, since May 2023: securing identity, endpoint, and email across 35 Microsoft 365 client tenants, plus detection triage and assessment tooling.`,
+  },
+  {
+    label: 'Independent practice',
+    text: `Founder of ${site.business}: Microsoft 365 and Entra ID hardening and DMARC enforcement for small businesses. One healthcare engagement raised the client's Microsoft Secure Score from 35 to 73.`,
   },
   {
     label: 'Education',
-    text: 'M.S. in Cyber Security, University of North Dakota (in progress).',
+    text: 'M.S. in Cyber Security, University of North Dakota (in progress, started fall 2026). B.A.S. in Cybersecurity and Information Technology, Bismarck State College (December 2025).',
   },
   {
-    label: 'Certifications',
-    text: 'CompTIA CySA+ (2026), CompTIA Security+ (2025), ISC2 Certified in Cybersecurity (2025), CompTIA A+ (2024).',
+    label: 'Recognition',
+    text: 'National Cyber League, spring 2025: 28th nationally in the Team Game and 873rd of 8,569 in the Individual Game. InfraGard member since 2026.',
   },
 ];
 ---
 <BaseLayout
   title="About"
-  description="About Matthew Levorson, security engineer and owner of NextlayerSec LLC, based in North Dakota."
+  description="About Matthew Levorson, security engineer based in North Dakota: identity, endpoint and email security on Microsoft 365."
 >
   <div class="wrap">
     <section class="section prose">
       <h1>About</h1>
       <p class="lede">
-        I'm {site.name}, a security engineer based in {site.location}. I own {site.business}, a
-        consulting practice focused on Microsoft 365 and Entra security assessments, enterprise email
-        security, and DMARC enforcement.
+        I'm {site.name}, a security engineer based in {site.location}. I roll out identity,
+        endpoint, and email security controls for a managed service provider's Microsoft 365
+        clients, investigate detections, and <a href="/projects/">write up what I build</a>.
       </p>
       <h2>Background</h2>
       <ul>
@@ -60,9 +83,37 @@ const background = [
           </li>
         ))}
       </ul>
-      <p>
+      <p id="contact">
         Elsewhere: <MaybeLink href={links.linkedin}>LinkedIn</MaybeLink> &middot; <MaybeLink href={links.github}>GitHub</MaybeLink>
       </p>
+    </section>
+
+    <section class="home-section" aria-labelledby="certifications">
+      <h2 id="certifications">Certifications</h2>
+      <ul class="cert-list">
+        {
+          certifications.map((cert) => (
+            <li>
+              <span class="cert-name">{cert.name}</span>
+              <span class="cert-issuer">{cert.issuer}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="home-section" aria-labelledby="experience-heading">
+      <h2 id="experience-heading">Experience</h2>
+      <p class="mono muted role-line">{role.title} &middot; {role.employer} &middot; {role.period}</p>
+      <ul class="card-grid">
+        {
+          experience.map((entry) => (
+            <li>
+              <ExperienceRow entry={entry} detailed />
+            </li>
+          ))
+        }
+      </ul>
     </section>
 
     <section aria-labelledby="focus-heading">
@@ -72,14 +123,31 @@ const background = [
           focusAreas.map((area) => (
             <li class="card">
               <h3>{area.title}</h3>
-              <p>{area.text}</p>
-              <p>{area.detail}</p>
+              <dl class="focus__facts">
+                <div>
+                  <dt>Scope and standards</dt>
+                  <dd>{area.scope}</dd>
+                </div>
+                <div>
+                  <dt>Tooling and method</dt>
+                  <dd>{area.tooling}</dd>
+                </div>
+                <div>
+                  <dt>Deliverable</dt>
+                  <dd>{area.deliverable}</dd>
+                </div>
+              </dl>
+              <p class="focus__links">
+                {area.projects.map((p) => (
+                  <a href={p.href}>
+                    {p.label}<span aria-hidden="true"> →</span>
+                  </a>
+                ))}
+              </p>
             </li>
           ))
         }
       </ul>
     </section>
-
-    <WorkWithMe />
   </div>
 </BaseLayout>

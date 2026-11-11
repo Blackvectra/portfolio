@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import WorkWithMe from '../../components/WorkWithMe.astro';
 import { formatDate, getPublishedWriting } from '../../lib/writing';
 
 const posts = await getPublishedWriting();
@@ -8,6 +7,7 @@ const posts = await getPublishedWriting();
 <BaseLayout
   title="Writing"
   description="Technical write-ups and case studies by Matthew Levorson on Microsoft 365, Entra, and email security."
+  noindex={posts.length === 0}
 >
   <div class="wrap">
     <section class="section">
@@ -18,7 +18,9 @@ const posts = await getPublishedWriting();
       </p>
       {
         posts.length === 0 ? (
-          <p class="empty-state">Nothing published yet. Write-ups will appear here as they are finished.</p>
+          <p class="empty-state">
+            Nothing published here yet.
+          </p>
         ) : (
           <ul class="post-list">
             {posts.map((post) => (
@@ -36,6 +38,5 @@ const posts = await getPublishedWriting();
         )
       }
     </section>
-    <WorkWithMe />
   </div>
 </BaseLayout>

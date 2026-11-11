@@ -1,6 +1,6 @@
 # mattlevorson.com
 
-Static portfolio site for Matthew Levorson: projects, technical write-ups, and a route to NextlayerSec for consulting work. Built with [Astro](https://astro.build/) as plain static HTML and CSS. No analytics, cookies, forms, embeds, or third-party requests.
+Static portfolio site for Matthew Levorson: work experience, projects, and technical write-ups. Built with [Astro](https://astro.build/) as plain static HTML and CSS. No analytics, cookies, forms, embeds, or third-party requests.
 
 ## Requirements
 
@@ -39,9 +39,12 @@ npm run preview   # serves dist/ locally
 
 ## Content
 
-- **Projects**: `src/data/projects.ts`. Each entry has a summary, a status (`planned`, `in-progress`, `published`), and a link. A link that is not a URL or internal path renders as visible placeholder text.
+- **Projects**: `src/data/projects.ts`. Each entry has a category, summary, problem, role, one-line deliverable, what was built, validation performed, limitations, a status (`planned`, `in-progress`, `published`), a link, and optional extra links. Home shows a scannable card per project; `/projects/` shows the full entry. A link that is not a URL or internal path renders as visible placeholder text.
 - **Writing**: Markdown files in `src/content/writing/` with frontmatter `title`, `date`, `summary`, `status` (`draft` or `published`). Drafts get no page, no index entry, and no sitemap entry. `case-study-template.md` is the case study template; copy it to start a new one.
-- **Links and site facts**: `src/data/site.ts` (LinkedIn, GitHub, booking link).
+- The Writing menu item, the home page's Writing section, and the sitemap entry appear once the first entry is `published`; until then the Writing index is `noindex`.
+- **Experience**: `src/data/experience.ts`. Work done in employment, at resume-level detail with no client names. Home shows one row per entry; About shows the full entries.
+- **Portrait**: `public/portrait.webp` with a `public/portrait.jpg` fallback, 320x320, cropped from the NextLayerSec site's portrait. Re-encode any replacement so it carries no EXIF, GPS, or XMP data, and keep the file on this domain (`img-src 'self'`).
+- **Links and site facts**: `src/data/site.ts` (LinkedIn, GitHub). **Certifications**: `src/data/certifications.ts`, shown as their own section on About (`/about/#certifications`), newest first, without years.
 
 ## Security headers and CSP
 
@@ -56,6 +59,16 @@ Do not loosen the CSP to make something work. Move the code to an external file 
 `public/.well-known/security.txt` expires `2027-10-31T00:00:00Z`. Update it before then.
 
 ## Styling
+
+Editorial and monospace, deliberately not the look of the NextLayerSec
+business site. Serif for reading (Newsreader, optical-size axis, self-hosted
+from `@fontsource-variable/newsreader`), monospace for labels, dates, tags,
+navigation and code (IBM Plex Mono, `@fontsource/ibm-plex-mono`), one accent
+(oxblood in light, brick in dark), hairline rules instead of cards or fills,
+a 36rem reading measure. All tokens live at the top of `global.css` with the
+contrast ratios they were checked against; `--border` is decorative and
+`--border-strong` is the one used on control edges (3:1 or better on the
+background in both themes).
 
 `src/styles/tailwind.css` is the single stylesheet entry (imported by
 `BaseLayout.astro`). It wraps the site's own CSS with Tailwind 4 in cascade
