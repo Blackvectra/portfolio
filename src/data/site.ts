@@ -28,6 +28,7 @@ export function isLink(value: string): boolean {
 
 export const nav = [
   { href: '/projects/', label: 'Projects' },
+  { href: '/certifications/', label: 'Certifications' },
   { href: '/writing/', label: 'Writing' },
   { href: '/about/', label: 'About' },
 ] as const;

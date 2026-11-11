@@ -1,4 +1,5 @@
-// Certifications held, shown as their own section on About. Newest first. No
+// Certifications held, shown on their own page (/certifications/, in the
+// menu). Newest first. No
 // years are shown (the owner's choice). Only completed certifications belong
 // here; anything in progress stays off the site.
 
