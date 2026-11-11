@@ -44,7 +44,7 @@ npm run preview   # serves dist/ locally
 - The Writing menu item, the home page's Writing section, and the sitemap entry appear once the first entry is `published`; until then the Writing index is `noindex`.
 - **Experience**: `src/data/experience.ts`. Work done in employment, at resume-level detail with no client names. Home shows one row per entry; About shows the full entries.
 - **Portrait**: `public/portrait.webp` with a `public/portrait.jpg` fallback, 320x320, cropped from the NextLayerSec site's portrait. Re-encode any replacement so it carries no EXIF, GPS, or XMP data, and keep the file on this domain (`img-src 'self'`).
-- **Links and site facts**: `src/data/site.ts` (LinkedIn, GitHub). **Certifications**: `src/data/certifications.ts`, shown as their own section on About (`/about/#certifications`), newest first, without years.
+- **Links and site facts**: `src/data/site.ts` (LinkedIn, GitHub). **Certifications**: `src/data/certifications.ts`, shown on their own page (`/certifications/`, in the menu), newest first, without years.
 
 ## Security headers and CSP
 

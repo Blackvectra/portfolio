@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { certifications } from '../../data/certifications';
+---
+<BaseLayout
+  title="Certifications"
+  description="Certifications held by Matthew Levorson: CompTIA PenTest+, CySA+, Security+, Linux+, Network+, and A+, and ISC2 Certified in Cybersecurity."
+>
+  <div class="wrap">
+    <section class="section">
+      <h1>Certifications</h1>
+      <p class="lede">Current certifications, newest first.</p>
+      <ul class="cert-list">
+        {
+          certifications.map((cert) => (
+            <li>
+              <span class="cert-name">{cert.name}</span>
+              <span class="cert-issuer">{cert.issuer}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </div>
+</BaseLayout>

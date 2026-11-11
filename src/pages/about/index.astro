@@ -3,7 +3,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ExperienceRow from '../../components/ExperienceRow.astro';
 import MaybeLink from '../../components/MaybeLink.astro';
 import { links, site } from '../../data/site';
-import { certifications } from '../../data/certifications';
 import { experience, role } from '../../data/experience';
 
 // Each focus area is split into scope and standards, tooling and method, and
@@ -86,20 +85,6 @@ const background = [
       <p id="contact">
         Elsewhere: <MaybeLink href={links.linkedin}>LinkedIn</MaybeLink> &middot; <MaybeLink href={links.github}>GitHub</MaybeLink>
       </p>
-    </section>
-
-    <section class="home-section" aria-labelledby="certifications">
-      <h2 id="certifications">Certifications</h2>
-      <ul class="cert-list">
-        {
-          certifications.map((cert) => (
-            <li>
-              <span class="cert-name">{cert.name}</span>
-              <span class="cert-issuer">{cert.issuer}</span>
-            </li>
-          ))
-        }
-      </ul>
     </section>
 
     <section class="home-section" aria-labelledby="experience-heading">
