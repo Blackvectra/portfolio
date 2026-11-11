@@ -32,7 +32,7 @@ npm run preview   # serves dist/ locally
 
 | Command | What it does | Runs in CI |
 | --- | --- | --- |
-| `npm run check` | `astro check` type and template diagnostics | Yes |
+| `npm run check` | `astro sync`, then `tsc --noEmit --runExternalCode`: TypeScript 7.1 type-checks `.ts` and `.astro` files through `@astrojs/ts-content-mapper` (registered in `tsconfig.json`). Both are pre-release (TypeScript beta, mapper 0.x); `astro check` does not support TypeScript 7. `--runExternalCode` lets the mapper run during compilation. | Yes |
 | `npm run check:inline` | Fails if `dist/` HTML has inline scripts, `<style>` blocks, `style` attributes, or event-handler attributes. Run after `npm run build`. | Yes |
 | `npm audit --audit-level=high` | Fails on high or critical advisories | Yes |
 | `npm run check:placeholders` | Pre-launch gate. Fails if any `PLACEHOLDER` text remains in `src/` or `public/`. Draft writing entries are skipped and listed. | No |
