@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ExperienceRow from '../../components/ExperienceRow.astro';
 import MaybeLink from '../../components/MaybeLink.astro';
 import { links, site } from '../../data/site';
-import { certificationsLine } from '../../data/certifications';
+import { certifications } from '../../data/certifications';
 import { experience, role } from '../../data/experience';
 
 // Each focus area is split into scope and standards, tooling and method, and
@@ -58,10 +58,6 @@ const background = [
     text: 'M.S. in Cyber Security, University of North Dakota (in progress, started fall 2026). B.A.S. in Cybersecurity and Information Technology, Bismarck State College (December 2025).',
   },
   {
-    label: 'Certifications',
-    text: `${certificationsLine}.`,
-  },
-  {
     label: 'Recognition',
     text: 'National Cyber League, spring 2025: 28th nationally in the Team Game and 873rd of 8,569 in the Individual Game. InfraGard member since 2026.',
   },
@@ -90,6 +86,20 @@ const background = [
       <p id="contact">
         Elsewhere: <MaybeLink href={links.linkedin}>LinkedIn</MaybeLink> &middot; <MaybeLink href={links.github}>GitHub</MaybeLink>
       </p>
+    </section>
+
+    <section class="home-section" aria-labelledby="certifications">
+      <h2 id="certifications">Certifications</h2>
+      <ul class="cert-list">
+        {
+          certifications.map((cert) => (
+            <li>
+              <span class="cert-name">{cert.name}</span>
+              <span class="cert-issuer">{cert.issuer}</span>
+            </li>
+          ))
+        }
+      </ul>
     </section>
 
     <section class="home-section" aria-labelledby="experience-heading">
