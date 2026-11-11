@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ExperienceRow from '../components/ExperienceRow.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { projects } from '../data/projects';
-import { certifications } from '../data/certifications';
 import { experience, role } from '../data/experience';
 import { links, site } from '../data/site';
 import { formatDate, getPublishedWriting } from '../lib/writing';
@@ -21,12 +20,6 @@ const posts = (await getPublishedWriting()).slice(0, 3);
           across 35 Microsoft 365 client tenants. I roll out and tune the controls, investigate
           detections, and build tooling that verifies what is actually enforced.
         </p>
-        <div class="cert-line">
-          <span class="mono muted" id="cert-line-label">Certifications</span>
-          <ul class="tags" aria-labelledby="cert-line-label">
-            {certifications.map((cert) => <li>{cert.short}</li>)}
-          </ul>
-        </div>
         <p class="intro-actions">
           <a class="button" href="/projects/">View projects</a>
           <a href={links.linkedin}>Connect on LinkedIn<span aria-hidden="true"> ↗</span></a>

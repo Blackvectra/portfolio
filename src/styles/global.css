@@ -920,16 +920,29 @@ code {
   text-transform: uppercase;
 }
 
-/* Certification names under the home headline: a mono label, then the names. */
-.cert-line {
+/* Certifications on About: name and issuer on one ruled row. */
+.cert-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+.cert-list li {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
   align-items: baseline;
-  gap: 0.25rem 1rem;
-  margin: 1.25rem 0 0;
-  max-width: var(--measure);
+  gap: 0.25rem 1.5rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--border);
 }
-.cert-line .tags {
-  margin: 0;
-  color: var(--text);
+.cert-name {
+  font-size: 1.1rem;
+}
+.cert-issuer {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }
