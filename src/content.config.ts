@@ -12,6 +12,9 @@ const writing = defineCollection({
     title: z.string(),
     date: z.coerce.date(),
     summary: z.string(),
+    // Optional shorter text for the meta description (about 155 characters).
+    // The summary is used when it is absent.
+    description: z.string().max(160).optional(),
     status: z.enum(['draft', 'published']),
   }),
 });

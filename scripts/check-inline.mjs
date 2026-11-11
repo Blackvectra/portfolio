@@ -2,6 +2,9 @@
 // Fails if any built HTML file contains code the CSP would block:
 // inline <script> bodies, <script> tags without src, <style> blocks,
 // style="" attributes, on*="" event handler attributes, or javascript: URLs.
+// One exception: <script type="application/ld+json"> is a data block the
+// browser never executes, so the CSP does not apply to it. Its body must
+// still parse as JSON.
 // Usage: node scripts/check-inline.mjs [dir]   (default: dist)
 import { readdir, readFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
@@ -28,6 +31,14 @@ try {
     // <script> elements: must have src and an empty body.
     for (const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi)) {
       const [, attrs, body] = m;
+      if (/\stype\s*=\s*["']?application\/ld\+json["']?(\s|$)/i.test(` ${attrs}`)) {
+        try {
+          JSON.parse(body);
+        } catch {
+          problems.push(`${rel}: JSON-LD block that is not valid JSON`);
+        }
+        continue;
+      }
       if (!/\ssrc\s*=/i.test(` ${attrs}`)) problems.push(`${rel}: inline <script> without src`);
       else if (body.trim() !== '') problems.push(`${rel}: <script src> with an inline body`);
     }
