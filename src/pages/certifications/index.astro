@@ -4,17 +4,20 @@ import { certifications } from '../../data/certifications';
 ---
 <BaseLayout
   title="Certifications"
-  description="Certifications held by Matthew Levorson: CompTIA PenTest+, CySA+, Security+, Linux+, Network+, and A+, and ISC2 Certified in Cybersecurity."
+  description="Certifications held by Matthew Levorson: Microsoft SC-900, CompTIA PenTest+, CySA+, Security+, Linux+, Network+, and A+, and ISC2 Certified in Cybersecurity."
 >
   <div class="wrap">
     <section class="section">
       <h1>Certifications</h1>
-      <p class="lede">Current certifications, newest first.</p>
+      <p class="lede">Current certifications, newest first. Each links to its public verification page.</p>
       <ul class="cert-list">
         {
           certifications.map((cert) => (
             <li>
-              <span class="cert-name">{cert.name}</span>
+              <a class="cert-name" href={cert.href}>
+                {cert.name}<span aria-hidden="true"> ↗</span>
+                <span class="visually-hidden"> (verify on the issuer's site)</span>
+              </a>
               <span class="cert-issuer">{cert.issuer}</span>
             </li>
           ))
