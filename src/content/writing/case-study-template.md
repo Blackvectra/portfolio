@@ -6,6 +6,9 @@ date: 2026-11-07 # [PLACEHOLDER: publication date, YYYY-MM-DD]
 summary: "[PLACEHOLDER: one or two sentences on what was assessed or built and what the reader will learn]"
 # Optional: description, a shorter meta description (160 characters at most).
 status: draft
+kind: case-study
+# Evidence rules (docs/decisions/0001): no client or employer identifiers,
+# observation kept apart from interpretation, limitations stated.
 ---
 
 > Label every item in this write-up as **Completed** (done and verified) or **Proposed** (recommended or planned, not done). Do not mix the two in one sentence.

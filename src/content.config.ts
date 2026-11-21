@@ -16,6 +16,9 @@ const writing = defineCollection({
     // The summary is used when it is absent.
     description: z.string().max(160).optional(),
     status: z.enum(['draft', 'published']),
+    // case-study: a sanitized write-up with no public repository. It must
+    // carry no client or employer identifiers (see docs/decisions/0001).
+    kind: z.enum(['article', 'case-study']).default('article'),
   }),
 });
 

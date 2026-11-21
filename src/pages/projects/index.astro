@@ -3,7 +3,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import MaybeLink from '../../components/MaybeLink.astro';
 import StatusBadge from '../../components/StatusBadge.astro';
 import Summary from '../../components/Summary.astro';
-import { projects } from '../../data/projects';
+import { projectAreas, visibleProjects } from '../../data/projects';
+
+const groups = projectAreas
+  .map((area) => ({ area, items: visibleProjects.filter((p) => p.area === area) }))
+  .filter((g) => g.items.length > 0);
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 const statusNote = {
   planned: 'Planned. The entry describes intent, not results.',
@@ -13,7 +18,7 @@ const statusNote = {
 ---
 <BaseLayout
   title="Projects"
-  description="Projects by Matthew Levorson: email security on a self-managed domain, read-only Microsoft 365 and Entra assessment tooling, and a DMARC enforcement methodology."
+  description="Projects by Matthew Levorson: grouped by capability area: email security on a self-managed domain and read-only Microsoft 365 and Entra assessment tooling."
 >
   <div class="wrap">
     <section class="section">
@@ -23,13 +28,18 @@ const statusNote = {
         implemented, what I actually validated, and what it does not do, with a link to the code or
         notes.
       </p>
+      {
+        groups.map((group) => (
+          <section class="section" aria-labelledby={`area-${slug(group.area)}`}>
+            <h2 id={`area-${slug(group.area)}`}>{group.area}</h2>
       <ul class="entry-list">
         {
-          projects.map((project) => (
+          group.items.map((project) => (
             <li>
               <article class="entry" id={project.id} aria-labelledby={`${project.id}-title`}>
+                {project.aliases?.map((alias) => <span id={alias} />)}
                 <p class="mono muted entry__category">{project.category}</p>
-                <h2 id={`${project.id}-title`}>{project.title}</h2>
+                <h3 id={`${project.id}-title`}>{project.title}</h3>
                 <ul class="tags" aria-label="Topics">
                   {project.topics.map((topic) => <li>{topic}</li>)}
                 </ul>
@@ -79,6 +89,9 @@ const statusNote = {
           ))
         }
       </ul>
+          </section>
+        ))
+      }
     </section>
   </div>
 </BaseLayout>
