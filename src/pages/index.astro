@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ExperienceRow from '../components/ExperienceRow.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import { projects } from '../data/projects';
+import { visibleProjects } from '../data/projects';
 import { experience, role } from '../data/experience';
 import { links, site } from '../data/site';
 import { formatDate, getPublishedWriting } from '../lib/writing';
@@ -58,7 +58,7 @@ const posts = (await getPublishedWriting()).slice(0, 3);
       </div>
       <ul class="card-grid">
         {
-          projects.map((project) => (
+          visibleProjects.map((project) => (
             <li>
               <ProjectCard project={project} />
             </li>

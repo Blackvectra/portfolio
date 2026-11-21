@@ -27,6 +27,7 @@ const posts = await getPublishedWriting();
               <li>
                 <article>
                   <time datetime={post.data.date.toISOString().slice(0, 10)}>{formatDate(post.data.date)}</time>
+                  {post.data.kind === 'case-study' && <span class="muted"> · Sanitized case study</span>}
                   <h2>
                     <a href={`/writing/${post.id}/`}>{post.data.title}</a>
                   </h2>

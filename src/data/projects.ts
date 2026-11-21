@@ -12,10 +12,24 @@
 
 export type ProjectStatus = 'planned' | 'in-progress' | 'published';
 
+/** Capability areas, in the order /projects/ renders them. */
+export const projectAreas = [
+  'Identity & Access',
+  'Email Security',
+  'Detection & Response',
+  'Cloud & Infrastructure',
+  'Assessment Tooling',
+] as const;
+export type ProjectArea = (typeof projectAreas)[number];
+
 export interface Project {
   /** Stable id, used as the anchor on /projects/ (e.g. /projects/#email-security-build). */
   id: string;
   title: string;
+  /** Capability area the project is grouped under on /projects/. */
+  area: ProjectArea;
+  /** Former ids that should still resolve as anchors (e.g. after a merge). */
+  aliases?: string[];
   /** Short label above the title, e.g. "Microsoft 365 · Assessment tooling". */
   category: string;
   /** One paragraph. Describe scope; do not claim results that are not published. */
@@ -43,6 +57,8 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 'email-security-build',
+    aliases: ['dmarc-enforcement-methodology'],
+    area: 'Email Security',
     title: 'Email security build on my own domain',
     category: 'Email security · Exchange Online',
     summary:
@@ -59,6 +75,7 @@ export const projects: Project[] = [
       'An Exchange Online hardening runbook and baseline checklist',
       'DKIM selector management and key rotation, and a guide to reading DMARC aggregate reports',
       'Per-domain status records from a reusable onboarding template',
+      'A staged DMARC enforcement method: monitoring to quarantine to reject, with entry criteria and a rollback trigger defined before each stage',
     ],
     validation: [
       'Verified against public DNS and the live MTA-STS policy host, with the validation output documented in the repository',
@@ -68,14 +85,22 @@ export const projects: Project[] = [
     limitations: [
       'Two further domains are recorded in the repository as in progress',
       'Deployed on my own domains, not in a client or employer environment',
+      'DMARC sender-inventory templates and a worked example are still to come',
     ],
     status: 'published',
     link: 'https://github.com/Blackvectra/nextlayersec-email-security',
     linkLabel: 'View the framework',
+    extraLinks: [
+      {
+        label: 'Read the DMARC enforcement notes',
+        href: 'https://github.com/Blackvectra/nextlayersec-email-security/tree/main/dmarc',
+      },
+    ],
     topics: ['DNSSEC', 'SMTP DANE', 'MTA-STS', 'TLS-RPT', 'DMARC', 'Exchange Online'],
   },
   {
     id: 'm365-entra-assessment-tool',
+    area: 'Assessment Tooling',
     title: 'Microsoft 365 and Entra security assessment tool',
     category: 'Microsoft 365 · Assessment tooling',
     summary:
@@ -112,26 +137,7 @@ export const projects: Project[] = [
     extraLinks: [{ label: 'Read the accuracy review', href: '/writing/tenantposture-accuracy-review/' }],
     topics: ['Microsoft Graph', 'Entra ID', 'Microsoft 365', 'Intune', 'Read-only'],
   },
-  {
-    id: 'dmarc-enforcement-methodology',
-    title: 'DMARC enforcement methodology',
-    category: 'Email security · Method',
-    summary:
-      'A repeatable method for moving a domain to DMARC enforcement without breaking legitimate mail: build an inventory of every sender, move policy in stages from monitoring to quarantine to reject, and define rollback criteria before each step. Published so far: the staged rollout schedule from monitoring to quarantine to reject and the notes on reading aggregate reports, in the email security repository. Sender-inventory templates and a worked example are still to come.',
-    problem:
-      'Moving straight to p=reject breaks any legitimate sender that is not aligned. Staying at p=none indefinitely leaves the domain open to spoofing.',
-    role: 'Written by me, from the rollouts on my own domains, and published in the email security repository.',
-    deliverable:
-      'A staged rollout schedule from monitoring to quarantine to reject, with rollback criteria defined before each step, plus notes on reading aggregate reports.',
-    built: [
-      'The staged rollout schedule, with entry criteria and a rollback trigger for each stage',
-      'Notes on setting up DMARC aggregate reporting and reading the reports',
-    ],
-    validation: ['Applied on my own domains as part of the email security build above'],
-    limitations: ['Sender-inventory templates and a worked example are still to come'],
-    status: 'in-progress',
-    link: 'https://github.com/Blackvectra/nextlayersec-email-security/tree/main/dmarc',
-    linkLabel: 'Read the current notes',
-    topics: ['DMARC', 'SPF', 'DKIM', 'Sender inventory', 'Rollback'],
-  },
 ];
+
+/** Projects shown on the site. Planned work lives in the backlog, not here. */
+export const visibleProjects = projects.filter((p) => p.status !== 'planned');

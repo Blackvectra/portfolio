@@ -29,6 +29,7 @@ const { Content } = await render(post);
         <h1>{post.data.title}</h1>
         <p class="muted">
           <time datetime={post.data.date.toISOString().slice(0, 10)}>{formatDate(post.data.date)}</time>
+          {post.data.kind === 'case-study' && <span> · Sanitized case study</span>}
         </p>
       </header>
       <div class="article-body">
