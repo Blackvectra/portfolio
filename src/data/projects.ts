@@ -56,6 +56,40 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 'hybrid-identity-lab',
+    area: 'Identity & Access',
+    title: 'Hybrid identity lab: Active Directory to Microsoft Entra ID',
+    category: 'Identity · Entra Connect Sync',
+    summary:
+      'A VMware lab connecting on-premises Active Directory to Microsoft Entra ID with Entra Connect Sync, built to test each hybrid identity flow from the user side and to work out what evidence proves it. Tested password hash sync, self-service password reset with writeback, and Kerberos Seamless SSO on an AD-joined client. Identifiers in the public repository are anonymized.',
+    problem:
+      "Hybrid identity features are easy to switch on and easy to misread: a successful sync run, a password-free page, or a reset confirmation doesn't show which flow worked. Each one needs its own test and its own evidence.",
+    role: 'Personal lab, built and documented by me on a domain I own. Not a client or employer environment.',
+    deliverable:
+      'A rebuild guide, test procedures, a troubleshooting log, and an evidence register that separates captured results from operator-confirmed ones.',
+    built: [
+      'A domain controller, a separate Entra Connect Sync member server, and a Windows 11 client, with sync scoped to one lab OU',
+      'Password hash sync, password writeback, and Seamless SSO, with the SSO Group Policy scoped to the lab OU',
+      'Test procedures for each flow, written so an existing session or a Success label cannot pass for a result',
+      'A read-only PowerShell check of DNS discovery, Connect staging state, the SSO computer account and key age, and device and token state',
+    ],
+    validation: [
+      'Password hash sync: the changed AD password worked in a fresh cloud sign-in (operator-confirmed)',
+      'Writeback: a credentialed query to the domain controller succeeded with the new SSPR password (operator-confirmed)',
+      'Seamless SSO: a captured Kerberos ticket for the SSO endpoint with no Entra join or PRT on the device, plus a password-free browser sign-in',
+    ],
+    limitations: [
+      'One forest, one synchronized test user, one group: a learning lab, not a production migration or rollout',
+      'The client is AD joined only; Entra hybrid device join and Autopilot are not claimed',
+      'Some results are operator-confirmed rather than captured; the evidence gaps are listed in the repository',
+      'The validation script has not yet been run against the lab',
+    ],
+    status: 'published',
+    link: 'https://github.com/Blackvectra/hybrid-identity-lab',
+    linkLabel: 'View the lab',
+    topics: ['Entra Connect Sync', 'Password hash sync', 'SSPR writeback', 'Seamless SSO', 'Kerberos'],
+  },
+  {
     id: 'email-security-build',
     aliases: ['dmarc-enforcement-methodology'],
     area: 'Email Security',
