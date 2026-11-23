@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
   pull_request:
+  schedule:
+    # Weekly: a linked repository can go private or disappear with no commit here.
+    - cron: '23 7 * * 1'
 
 permissions:
   contents: read
@@ -46,3 +49,52 @@ jobs:
 
       - name: Fail on inline scripts or styles in dist
         run: npm run check:inline
+
+  project-links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Every project card link answers 200
+        run: node scripts/check-project-links.mjs
+
+  redaction:
+    # Employer and client names must not reach this public repository except
+    # where the work history names the employer on purpose. The names live in
+    # the REDACTION_DENYLIST secret (one literal string per line) so the list
+    # is not itself published. Dependabot runs get no Actions secrets and only
+    # touch dependency files, so they are skipped rather than failed.
+    if: github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Denylisted identifiers
+        env:
+          DENYLIST: ${{ secrets.REDACTION_DENYLIST }}
+        run: |
+          if [ -z "$DENYLIST" ]; then
+            echo "::error::REDACTION_DENYLIST secret is not set, so employer and client names are unchecked. Add it under Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+          printf '%s\n' "$DENYLIST" | sed '/^[[:space:]]*$/d' > "$RUNNER_TEMP/deny.txt"
+          # experience.ts names the employer on purpose; the lockfile is hashes.
+          # -l lists matching files only, so secret values never reach the log.
+          if git ls-files -z -- . ':!src/data/experience.ts' ':!package-lock.json' \
+              | xargs -0 grep -i -F -f "$RUNNER_TEMP/deny.txt" -l; then
+            echo "::error::Files above contain a denylisted identifier. Replace it or move it out of the public repository."
+            exit 1
+          fi

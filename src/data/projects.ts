@@ -203,7 +203,7 @@ export const projects: Project[] = [
       'Separate, clearly labeled baseline scripts in the same repository do change tenant configuration; they are not part of an assessment run',
     ],
     // Hidden until the repository is public. It carries employer branding and
-    // ADR 0001 item 3 keeps NRG work off the site until NRG's policy is
+    // ADR 0001 item 3 keeps employer work off the site until the employer's policy is
     // confirmed. Set back to 'published' only when both are settled.
     status: 'planned',
     link: 'https://github.com/Blackvectra/TenantPosture',
