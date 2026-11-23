@@ -17,7 +17,7 @@ const focusAreas = [
     deliverable:
       'Tenant assessment findings mapped to NIST SP 800-53, CIS, CISA SCuBA, CMMC, and the HIPAA Security Rule, including which users are still on SMS or voice ahead of Microsoft retiring both and where a policy exists on paper but is not enforced.',
     projects: [
-      { label: 'Assessment tool', href: '/projects/#m365-entra-assessment-tool' },
+      { label: 'Passkey readiness assessment', href: '/projects/#entra-passkey-readiness' },
       { label: 'Hybrid identity lab', href: '/projects/#hybrid-identity-lab' },
     ],
   },
@@ -29,10 +29,10 @@ const focusAreas = [
       'Settings Catalog baselines, Attack Surface Reduction rule sets tuned to the client (healthcare EHR, law firm, AVD), and compliance, LAPS, and antivirus checks read the way Maester reads them.',
     deliverable:
       'Baselines applied with a dry run before anything changes, and device-compliance findings inside the tenant assessment.',
-    projects: [{ label: 'Assessment tool', href: '/projects/#m365-entra-assessment-tool' }],
+    projects: [],
   },
   {
-    title: 'Email Security',
+    title: 'Email security',
     scope:
       'SPF, DKIM, DMARC, MTA-STS, TLS-RPT, DNSSEC, and DANE on Exchange Online domains, with a focus on getting domains to DMARC enforcement.',
     tooling:
@@ -125,13 +125,15 @@ const background = [
                   <dd>{area.deliverable}</dd>
                 </div>
               </dl>
-              <p class="focus__links">
-                {area.projects.map((p) => (
-                  <a href={p.href}>
-                    {p.label}<span aria-hidden="true"> →</span>
-                  </a>
-                ))}
-              </p>
+              {area.projects.length > 0 && (
+                <p class="focus__links">
+                  {area.projects.map((p) => (
+                    <a href={p.href}>
+                      {p.label}<span aria-hidden="true"> →</span>
+                    </a>
+                  ))}
+                </p>
+              )}
             </li>
           ))
         }
