@@ -134,6 +134,42 @@ export const projects: Project[] = [
     topics: ['DNSSEC', 'SMTP DANE', 'MTA-STS', 'TLS-RPT', 'DMARC', 'Exchange Online'],
   },
   {
+    id: 'entra-passkey-readiness',
+    area: 'Identity & Access',
+    title: 'Entra SMS and voice retirement and passkey readiness assessment',
+    category: 'Entra ID · Assessment tooling',
+    summary:
+      'A read-only PowerShell 7 assessment that finds which Entra ID users are exposed to the retirement of Microsoft-provided SMS and voice authentication and which already have a passkey. It reports two populations that are easy to conflate: users the SMS and voice policy targets, and users with a phone method registered. It also reports separately the narrower set whose only MFA-capable method is a phone. Every Microsoft Graph call is a GET.',
+    problem:
+      'The Entra portal does not show which specific users are both targeted by the SMS and voice policy and unable to satisfy MFA without it after the retirement date, which is the list that decides who is blocked at sign-in.',
+    role: 'Sole author and maintainer. Public under the MIT license; the published sample output is generated from fictional data.',
+    deliverable:
+      'Per-user CSVs, an HTML report, a multi-tenant sweep and an estate roll-up, all from GET-only Graph reads.',
+    built: [
+      'Per-user policy-scope resolution through nested groups and exclusions, alongside method registration from the registration report',
+      'A count of users whose only MFA-capable method is a phone, kept separate from the risk bands',
+      'Privileged-account discovery by role assignment (active, PIM-eligible and PIM for Groups) that withholds the targeting exports when any read is incomplete, instead of reporting an empty list',
+      'A multi-tenant sweep with optional concurrency, an assessment comparison, an estate roll-up page and a Windows GUI',
+      'A remediation script written to disk for a person to review and run, rather than any write from the tool',
+      'CSV formula and HTML escaping for display names that reach files another person opens',
+    ],
+    validation: [
+      'A Pester suite and PSScriptAnalyzer run in CI on every push and weekly, because the code branches on hardcoded retirement dates',
+      'Published samples are regenerated from the script\'s own functions, and a test fails if a regeneration differs',
+      'End-to-end tests run the full script against a stubbed Graph tenant, including runs where role or PIM reads are refused',
+    ],
+    limitations: [
+      'No results from a live tenant are published; the repository holds fictional sample output only',
+      'Conditional Access is not evaluated, so policy scope is not the same as effective sign-in behavior',
+      'The registration report is not real-time, and disabled users are not assessed',
+      'Guest passkey readiness is on a separate Microsoft timeline and needs independent validation',
+    ],
+    status: 'published',
+    link: 'https://github.com/Blackvectra/entra-passkey-readiness',
+    linkLabel: 'View the project',
+    topics: ['Entra ID', 'Microsoft Graph', 'Passkeys', 'PowerShell', 'Read-only'],
+  },
+  {
     id: 'm365-entra-assessment-tool',
     area: 'Assessment Tooling',
     title: 'Microsoft 365 and Entra security assessment tool',
@@ -166,7 +202,10 @@ export const projects: Project[] = [
       'No live validation against a seeded test tenant yet, as recorded in the repository',
       'Separate, clearly labeled baseline scripts in the same repository do change tenant configuration; they are not part of an assessment run',
     ],
-    status: 'published',
+    // Hidden until the repository is public. It carries employer branding and
+    // ADR 0001 item 3 keeps NRG work off the site until NRG's policy is
+    // confirmed. Set back to 'published' only when both are settled.
+    status: 'planned',
     link: 'https://github.com/Blackvectra/TenantPosture',
     linkLabel: 'View the project',
     extraLinks: [{ label: 'Read the accuracy review', href: '/writing/tenantposture-accuracy-review/' }],

@@ -90,6 +90,5 @@ export const experience: ExperienceEntry[] = [
       'Prioritizes remediation recommendations from the findings',
     ],
     tools: ['PowerShell', 'Microsoft Graph', 'NIST', 'CIS', 'HIPAA'],
-    project: { label: 'Published as TenantPosture', href: '/projects/#m365-entra-assessment-tool' },
   },
 ];
